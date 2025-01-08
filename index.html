@@ -1,37 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Simple Calculator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Content</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
+            margin: 20px;
         }
-        input, button {
-            padding: 10px;
-            margin: 5px;
+        label, select, p {
             font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Simple Calculator</h1>
-    <input id="num1" type="number" placeholder="Enter number 1">
-    <input id="num2" type="number" placeholder="Enter number 2">
-    <button onclick="calculate()">Calculate</button>
-    <h2 id="result"></h2>
+    <h1>Calorie Content Finder</h1>
+    <label for="formulaSelect">Choose a formula:</label>
+    <select id="formulaSelect">
+        <option value="">-- Select a formula --</option>
+    </select>
+    <p id="result"></p>
 
     <script>
-        function calculate() {
-            const num1 = parseFloat(document.getElementById('num1').value);
-            const num2 = parseFloat(document.getElementById('num2').value);
-            if (!isNaN(num1) && !isNaN(num2)) {
-                document.getElementById('result').innerText = `Result: ${num1 + num2}`;
-            } else {
-                document.getElementById('result').innerText = 'Please enter valid numbers!';
-            }
-        }
+        // Fetch JSON data from the external file
+        fetch('data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load JSON data');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const formulas = data.Nestle;
+                const formulaSelect = document.getElementById('formulaSelect');
+
+                // Populate the dropdown menu
+                for (const formula in formulas) {
+                    const option = document.createElement('option');
+                    option.value = formulas[formula];
+                    option.textContent = formula;
+                    formulaSelect.appendChild(option);
+                }
+
+                // Display calorie content
+                formulaSelect.addEventListener('change', () => {
+                    const selectedValue = formulaSelect.value;
+                    const resultElement = document.getElementById('result');
+                    if (selectedValue) {
+                        resultElement.textContent = `Calorie Content per ml: ${selectedValue}`;
+                    } else {
+                        resultElement.textContent = '';
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error loading JSON data:', error);
+            });
     </script>
 </body>
 </html>
