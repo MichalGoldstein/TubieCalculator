@@ -1,0 +1,26 @@
+{
+    "name": "CalorieContent_ml",
+    "Nestle": {
+        "COMPLEAT Original 1.5": 1.5,
+        "COMPLEAT Peptide 1.0": 1.0,
+        "COMPLEAT Organic Blends": 1.27,
+        "Nutren 1.0 Fiber": 1.0,
+        "COMPLEAT Original 1.0": 1.0,
+        "Nutren 2.0": 2.0,
+        "Isosource 1.5": 1.5,
+        "Nutren 1.5": 1.0,
+        "Fibersource HN": 1.2,
+        "Isosource HN": 1.2,
+        "Vivonex Plus": 1.0,
+        "Vivonex T.E.N.": 1.0,
+        "Compleat Standard 1.4": 1.4,
+        "Compleat Peptide 1.5": 1.5,
+        "Diabetisource AC": 1.2,
+        "Peptamen": 1.0,
+        "Peptamen with PREBIO": 1.0,
+        "Peptamen 1.5 with PREBIO¹™": 1.5,
+        "Peptamen AF": 1.2,
+        "PEPTAMEN 1.5": 1.5,
+        "Tolerex": 1.0
+    }
+}
