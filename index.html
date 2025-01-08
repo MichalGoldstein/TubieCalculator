@@ -13,7 +13,7 @@
             font-size: 16px;
             margin: 10px 0;
         }
-        #result, #volumeResult {
+        #result, #volumeResult, #rateResult, #hoursResult {
             margin-top: 20px;
             font-weight: bold;
         }
@@ -21,6 +21,7 @@
 </head>
 <body>
     <h1>Calorie Content Calculator</h1>
+
     <!-- Formula Selection -->
     <label for="formulaSelect">Choose a formula:</label>
     <select id="formulaSelect">
@@ -33,6 +34,18 @@
     <input type="number" id="calorieGoal" placeholder="Enter calorie goal" min="1">
     <button id="calculateVolume">Calculate Volume</button>
     <p id="volumeResult"></p>
+
+    <!-- Infusion Rate Calculation -->
+    <label for="infusionHours">Enter infusion time (hours):</label>
+    <input type="number" id="infusionHours" placeholder="Enter hours" min="1">
+    <button id="calculateRate">Calculate Rate (ml/hr)</button>
+    <p id="rateResult"></p>
+
+    <!-- Infusion Time Calculation -->
+    <label for="infusionRate">Enter infusion rate (ml/hr):</label>
+    <input type="number" id="infusionRate" placeholder="Enter ml/hr" min="1">
+    <button id="calculateHours">Calculate Infusion Time (hours)</button>
+    <p id="hoursResult"></p>
 
     <script>
         // Fetch JSON data from the external file
@@ -48,8 +61,16 @@
                 const formulaSelect = document.getElementById('formulaSelect');
                 const resultElement = document.getElementById('result');
                 const calorieGoalInput = document.getElementById('calorieGoal');
-                const calculateButton = document.getElementById('calculateVolume');
+                const calculateVolumeButton = document.getElementById('calculateVolume');
                 const volumeResultElement = document.getElementById('volumeResult');
+
+                const infusionHoursInput = document.getElementById('infusionHours');
+                const calculateRateButton = document.getElementById('calculateRate');
+                const rateResultElement = document.getElementById('rateResult');
+
+                const infusionRateInput = document.getElementById('infusionRate');
+                const calculateHoursButton = document.getElementById('calculateHours');
+                const hoursResultElement = document.getElementById('hoursResult');
 
                 // Populate the dropdown menu
                 for (const formula in formulas) {
@@ -65,13 +86,15 @@
                     if (selectedValue) {
                         resultElement.textContent = `Calorie Content per ml: ${selectedValue} kcal/ml`;
                         volumeResultElement.textContent = ''; // Clear previous calculation result
+                        rateResultElement.textContent = '';
+                        hoursResultElement.textContent = '';
                     } else {
                         resultElement.textContent = '';
                     }
                 });
 
                 // Calculate required volume based on calorie goal
-                calculateButton.addEventListener('click', () => {
+                calculateVolumeButton.addEventListener('click', () => {
                     const calorieGoal = parseFloat(calorieGoalInput.value);
                     const caloriePerMl = parseFloat(formulaSelect.value);
 
@@ -87,6 +110,58 @@
 
                     const requiredVolume = (calorieGoal / caloriePerMl).toFixed(2);
                     volumeResultElement.textContent = `To reach your goal of ${calorieGoal} kcal, you need to infuse ${requiredVolume} ml.`;
+                });
+
+                // Calculate infusion rate (ml/hr) based on time
+                calculateRateButton.addEventListener('click', () => {
+                    const calorieGoal = parseFloat(calorieGoalInput.value);
+                    const infusionHours = parseFloat(infusionHoursInput.value);
+                    const caloriePerMl = parseFloat(formulaSelect.value);
+
+                    if (!calorieGoal || calorieGoal <= 0) {
+                        rateResultElement.textContent = 'Please enter a valid calorie goal.';
+                        return;
+                    }
+
+                    if (!caloriePerMl) {
+                        rateResultElement.textContent = 'Please select a formula.';
+                        return;
+                    }
+
+                    if (!infusionHours || infusionHours <= 0) {
+                        rateResultElement.textContent = 'Please enter a valid infusion time (hours).';
+                        return;
+                    }
+
+                    const requiredVolume = calorieGoal / caloriePerMl;
+                    const rate = (requiredVolume / infusionHours).toFixed(2);
+                    rateResultElement.textContent = `To reach your goal of ${calorieGoal} kcal in ${infusionHours} hours, you need to infuse at a rate of ${rate} ml/hr.`;
+                });
+
+                // Calculate infusion time (hours) based on rate
+                calculateHoursButton.addEventListener('click', () => {
+                    const calorieGoal = parseFloat(calorieGoalInput.value);
+                    const infusionRate = parseFloat(infusionRateInput.value);
+                    const caloriePerMl = parseFloat(formulaSelect.value);
+
+                    if (!calorieGoal || calorieGoal <= 0) {
+                        hoursResultElement.textContent = 'Please enter a valid calorie goal.';
+                        return;
+                    }
+
+                    if (!caloriePerMl) {
+                        hoursResultElement.textContent = 'Please select a formula.';
+                        return;
+                    }
+
+                    if (!infusionRate || infusionRate <= 0) {
+                        hoursResultElement.textContent = 'Please enter a valid infusion rate (ml/hr).';
+                        return;
+                    }
+
+                    const requiredVolume = calorieGoal / caloriePerMl;
+                    const time = (requiredVolume / infusionRate).toFixed(2);
+                    hoursResultElement.textContent = `To reach your goal of ${calorieGoal} kcal at a rate of ${infusionRate} ml/hr, you need to infuse for ${time} hours.`;
                 });
             })
             .catch(error => {
