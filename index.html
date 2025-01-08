@@ -3,41 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calorie Content</title>
+    <title>Calorie Content Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        label, select, p {
+        label, select, p, input, button {
             font-size: 16px;
+            margin: 10px 0;
         }
-        #result {
+        #result, #volumeResult {
             margin-top: 20px;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Calorie Content Finder</h1>
+    <h1>Calorie Content Calculator</h1>
+    <!-- Formula Selection -->
     <label for="formulaSelect">Choose a formula:</label>
     <select id="formulaSelect">
         <option value="">-- Select a formula --</option>
     </select>
     <p id="result"></p>
 
+    <!-- Calorie Goal Input -->
+    <label for="calorieGoal">Enter your calorie goal (kcal):</label>
+    <input type="number" id="calorieGoal" placeholder="Enter calorie goal" min="1">
+    <button id="calculateVolume">Calculate Volume</button>
+    <p id="volumeResult"></p>
+
     <script>
         // Fetch JSON data from the external file
         fetch('data.json')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error: Failed to load JSON data');
+                    throw new Error('Failed to load JSON data');
                 }
                 return response.json();
             })
             .then(data => {
                 const formulas = data.Nestle;
                 const formulaSelect = document.getElementById('formulaSelect');
+                const resultElement = document.getElementById('result');
+                const calorieGoalInput = document.getElementById('calorieGoal');
+                const calculateButton = document.getElementById('calculateVolume');
+                const volumeResultElement = document.getElementById('volumeResult');
 
                 // Populate the dropdown menu
                 for (const formula in formulas) {
@@ -47,15 +59,34 @@
                     formulaSelect.appendChild(option);
                 }
 
-                // Display calorie content
+                // Display calorie content for selected formula
                 formulaSelect.addEventListener('change', () => {
                     const selectedValue = formulaSelect.value;
-                    const resultElement = document.getElementById('result');
                     if (selectedValue) {
-                        resultElement.textContent = `Calorie Content per ml: ${selectedValue}`;
+                        resultElement.textContent = `Calorie Content per ml: ${selectedValue} kcal/ml`;
+                        volumeResultElement.textContent = ''; // Clear previous calculation result
                     } else {
                         resultElement.textContent = '';
                     }
+                });
+
+                // Calculate required volume based on calorie goal
+                calculateButton.addEventListener('click', () => {
+                    const calorieGoal = parseFloat(calorieGoalInput.value);
+                    const caloriePerMl = parseFloat(formulaSelect.value);
+
+                    if (!calorieGoal || calorieGoal <= 0) {
+                        volumeResultElement.textContent = 'Please enter a valid calorie goal.';
+                        return;
+                    }
+
+                    if (!caloriePerMl) {
+                        volumeResultElement.textContent = 'Please select a formula.';
+                        return;
+                    }
+
+                    const requiredVolume = (calorieGoal / caloriePerMl).toFixed(2);
+                    volumeResultElement.textContent = `To reach your goal of ${calorieGoal} kcal, you need to infuse ${requiredVolume} ml.`;
                 });
             })
             .catch(error => {
