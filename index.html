@@ -72,13 +72,16 @@
                 const calculateHoursButton = document.getElementById('calculateHours');
                 const hoursResultElement = document.getElementById('hoursResult');
 
+                // Get sorted keys of the formulas object
+                const sortedKeys = Object.keys(formulas).sort();
+                
                 // Populate the dropdown menu
-                for (const formula in formulas) {
+                sortedKeys.forEach(formula => {
                     const option = document.createElement('option');
                     option.value = formulas[formula];
                     option.textContent = formula;
                     formulaSelect.appendChild(option);
-                }
+                });
 
                 // Display calorie content for selected formula
                 formulaSelect.addEventListener('change', () => {
