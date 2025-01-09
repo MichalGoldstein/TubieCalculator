@@ -3,173 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calorie Content Calculator</title>
+    <title>Calorie Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        label, select, p, input, button {
-            font-size: 16px;
+        select, input, button {
             margin: 10px 0;
-        }
-        #result, #volumeResult, #rateResult, #hoursResult {
-            margin-top: 20px;
-            font-weight: bold;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <h1>Calorie Content Calculator</h1>
-
-    <!-- Formula Selection -->
-    <label for="formulaSelect">Choose a formula:</label>
-    <select id="formulaSelect">
-        <option value="">-- Select a formula --</option>
+    <h1>Calorie Calculator</h1>
+    
+    <!-- Dropdowns -->
+    <label for="brandSelect">Choose a brand:</label>
+    <select id="brandSelect">
+        <option value="" selected disabled>Select a brand</option>
     </select>
-    <p id="result"></p>
+
+    <label for="formulaSelect">Choose a formula:</label>
+    <select id="formulaSelect" disabled>
+        <option value="" selected disabled>Select a formula</option>
+    </select>
+
+    <!-- Output -->
+    <h2>Calorie Content: <span id="calorieContent">N/A</span> kcal/ml</h2>
 
     <!-- Calorie Goal Input -->
-    <label for="calorieGoal">Enter your calorie goal (kcal):</label>
-    <input type="number" id="calorieGoal" placeholder="Enter calorie goal" min="1">
-    <button id="calculateVolume">Calculate Volume</button>
-    <p id="volumeResult"></p>
+    <label for="calorieGoal">Enter your calorie goal:</label>
+    <input type="number" id="calorieGoal" placeholder="Calorie goal in kcal">
+    <button id="calculateVolumeBtn">Calculate Volume</button>
+    <h2>Volume Required: <span id="volumeRequired">N/A</span> ml</h2>
 
-    <!-- Infusion Rate Calculation -->
-    <label for="infusionHours">Enter infusion time (hours):</label>
-    <input type="number" id="infusionHours" placeholder="Enter hours" min="1">
-    <button id="calculateRate">Calculate Rate (ml/hr)</button>
-    <p id="rateResult"></p>
+    <!-- Rate/Time Calculations -->
+    <label for="infusionHours">Enter hours to infuse:</label>
+    <input type="number" id="infusionHours" placeholder="Infusion hours">
+    <button id="calculateRateBtn">Calculate Rate</button>
+    <h2>Rate Required: <span id="rateRequired">N/A</span> ml/hr</h2>
 
-    <!-- Infusion Time Calculation -->
     <label for="infusionRate">Enter infusion rate (ml/hr):</label>
-    <input type="number" id="infusionRate" placeholder="Enter ml/hr" min="1">
-    <button id="calculateHours">Calculate Infusion Time (hours)</button>
-    <p id="hoursResult"></p>
+    <input type="number" id="infusionRate" placeholder="Infusion rate">
+    <button id="calculateTimeBtn">Calculate Time</button>
+    <h2>Time Required: <span id="timeRequired">N/A</span> hours</h2>
 
     <script>
-        // Fetch JSON data from the external file
+        let data = {}; // Store the data
+
+        // Fetch data.json
         fetch('data.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to load JSON data');
-                }
-                return response.json();
+            .then(response => response.json())
+            .then(json => {
+                data = json;
+                populateBrands();
             })
-            .then(data => {
-                const formulas = data.Nestle;
-                const formulaSelect = document.getElementById('formulaSelect');
-                const resultElement = document.getElementById('result');
-                const calorieGoalInput = document.getElementById('calorieGoal');
-                const calculateVolumeButton = document.getElementById('calculateVolume');
-                const volumeResultElement = document.getElementById('volumeResult');
+            .catch(err => console.error('Error loading data.json:', err));
 
-                const infusionHoursInput = document.getElementById('infusionHours');
-                const calculateRateButton = document.getElementById('calculateRate');
-                const rateResultElement = document.getElementById('rateResult');
+        const brandSelect = document.getElementById('brandSelect');
+        const formulaSelect = document.getElementById('formulaSelect');
+        const calorieContent = document.getElementById('calorieContent');
+        const volumeRequired = document.getElementById('volumeRequired');
+        const rateRequired = document.getElementById('rateRequired');
+        const timeRequired = document.getElementById('timeRequired');
 
-                const infusionRateInput = document.getElementById('infusionRate');
-                const calculateHoursButton = document.getElementById('calculateHours');
-                const hoursResultElement = document.getElementById('hoursResult');
-
-                // Get sorted keys of the formulas object
-                const sortedKeys = Object.keys(formulas).sort();
-                
-                // Populate the dropdown menu
-                sortedKeys.forEach(formula => {
-                    const option = document.createElement('option');
-                    option.value = formulas[formula];
-                    option.textContent = formula;
-                    formulaSelect.appendChild(option);
-                });
-
-                // Display calorie content for selected formula
-                formulaSelect.addEventListener('change', () => {
-                    const selectedValue = formulaSelect.value;
-                    if (selectedValue) {
-                        resultElement.textContent = `Calorie Content per ml: ${selectedValue} kcal/ml`;
-                        volumeResultElement.textContent = ''; // Clear previous calculation result
-                        rateResultElement.textContent = '';
-                        hoursResultElement.textContent = '';
-                    } else {
-                        resultElement.textContent = '';
-                    }
-                });
-
-                // Calculate required volume based on calorie goal
-                calculateVolumeButton.addEventListener('click', () => {
-                    const calorieGoal = parseFloat(calorieGoalInput.value);
-                    const caloriePerMl = parseFloat(formulaSelect.value);
-
-                    if (!calorieGoal || calorieGoal <= 0) {
-                        volumeResultElement.textContent = 'Please enter a valid calorie goal.';
-                        return;
-                    }
-
-                    if (!caloriePerMl) {
-                        volumeResultElement.textContent = 'Please select a formula.';
-                        return;
-                    }
-
-                    const requiredVolume = (calorieGoal / caloriePerMl).toFixed(2);
-                    volumeResultElement.textContent = `To reach your goal of ${calorieGoal} kcal, you need to infuse ${requiredVolume} ml.`;
-                });
-
-                // Calculate infusion rate (ml/hr) based on time
-                calculateRateButton.addEventListener('click', () => {
-                    const calorieGoal = parseFloat(calorieGoalInput.value);
-                    const infusionHours = parseFloat(infusionHoursInput.value);
-                    const caloriePerMl = parseFloat(formulaSelect.value);
-
-                    if (!calorieGoal || calorieGoal <= 0) {
-                        rateResultElement.textContent = 'Please enter a valid calorie goal.';
-                        return;
-                    }
-
-                    if (!caloriePerMl) {
-                        rateResultElement.textContent = 'Please select a formula.';
-                        return;
-                    }
-
-                    if (!infusionHours || infusionHours <= 0) {
-                        rateResultElement.textContent = 'Please enter a valid infusion time (hours).';
-                        return;
-                    }
-
-                    const requiredVolume = calorieGoal / caloriePerMl;
-                    const rate = (requiredVolume / infusionHours).toFixed(2);
-                    rateResultElement.textContent = `To reach your goal of ${calorieGoal} kcal in ${infusionHours} hours, you need to infuse at a rate of ${rate} ml/hr.`;
-                });
-
-                // Calculate infusion time (hours) based on rate
-                calculateHoursButton.addEventListener('click', () => {
-                    const calorieGoal = parseFloat(calorieGoalInput.value);
-                    const infusionRate = parseFloat(infusionRateInput.value);
-                    const caloriePerMl = parseFloat(formulaSelect.value);
-
-                    if (!calorieGoal || calorieGoal <= 0) {
-                        hoursResultElement.textContent = 'Please enter a valid calorie goal.';
-                        return;
-                    }
-
-                    if (!caloriePerMl) {
-                        hoursResultElement.textContent = 'Please select a formula.';
-                        return;
-                    }
-
-                    if (!infusionRate || infusionRate <= 0) {
-                        hoursResultElement.textContent = 'Please enter a valid infusion rate (ml/hr).';
-                        return;
-                    }
-
-                    const requiredVolume = calorieGoal / caloriePerMl;
-                    const time = (requiredVolume / infusionRate).toFixed(2);
-                    hoursResultElement.textContent = `To reach your goal of ${calorieGoal} kcal at a rate of ${infusionRate} ml/hr, you need to infuse for ${time} hours.`;
-                });
-            })
-            .catch(error => {
-                console.error('Error loading JSON data:', error);
+        // Populate the brand dropdown
+        function populateBrands() {
+            Object.keys(data).forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                brandSelect.appendChild(option);
             });
+        }
+
+        // Populate the formula dropdown based on selected brand
+        brandSelect.addEventListener('change', () => {
+            formulaSelect.innerHTML = '<option value="" selected disabled>Select a formula</option>';
+            formulaSelect.disabled = false;
+
+            const selectedBrand = brandSelect.value;
+            const formulas = data[selectedBrand];
+            Object.keys(formulas).sort().forEach(formula => {
+                const option = document.createElement('option');
+                option.value = formulas[formula];
+                option.textContent = formula;
+                formulaSelect.appendChild(option);
+            });
+        });
+
+        // Update calorie content when formula is selected
+        formulaSelect.addEventListener('change', () => {
+            calorieContent.textContent = formulaSelect.value;
+        });
+
+        // Calculate volume required
+        document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
+            const goal = parseFloat(document.getElementById('calorieGoal').value);
+            const calPerMl = parseFloat(formulaSelect.value);
+            if (!isNaN(goal) && !isNaN(calPerMl)) {
+                volumeRequired.textContent = (goal / calPerMl).toFixed(2);
+            } else {
+                volumeRequired.textContent = 'N/A';
+            }
+        });
+
+        // Calculate rate required
+        document.getElementById('calculateRateBtn').addEventListener('click', () => {
+            const hours = parseFloat(document.getElementById('infusionHours').value);
+            const goal = parseFloat(document.getElementById('calorieGoal').value);
+            const calPerMl = parseFloat(formulaSelect.value);
+            if (!isNaN(hours) && !isNaN(goal) && !isNaN(calPerMl)) {
+                const volume = goal / calPerMl;
+                rateRequired.textContent = (volume / hours).toFixed(2);
+            } else {
+                rateRequired.textContent = 'N/A';
+            }
+        });
+
+        // Calculate time required
+        document.getElementById('calculateTimeBtn').addEventListener('click', () => {
+            const rate = parseFloat(document.getElementById('infusionRate').value);
+            const goal = parseFloat(document.getElementById('calorieGoal').value);
+            const calPerMl = parseFloat(formulaSelect.value);
+            if (!isNaN(rate) && !isNaN(goal) && !isNaN(calPerMl)) {
+                const volume = goal / calPerMl;
+                timeRequired.textContent = (volume / rate).toFixed(2);
+            } else {
+                timeRequired.textContent = 'N/A';
+            }
+        });
     </script>
 </body>
 </html>
