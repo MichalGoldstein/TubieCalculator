@@ -8,10 +8,23 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            line-height: 1.6;
         }
         select, input, button {
             margin: 10px 0;
             display: block;
+        }
+        .disclaimer {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .disclaimer strong {
+            color: #d9534f;
         }
     </style>
 </head>
@@ -48,6 +61,11 @@
     <input type="number" id="infusionRate" placeholder="Infusion rate">
     <button id="calculateTimeBtn">Calculate Time</button>
     <h2>Time Required: <span id="timeRequired">N/A</span> hours</h2>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+        <p><strong>Disclaimer:</strong> The information provided on this website is for general informational purposes only. It is not intended as medical advice or to replace consultation with your healthcare provider. Always consult with your medical team before making any decisions regarding your healthcare or nutrition needs.</p>
+    </div>
 
     <script>
         let data = {}; // Store the data
