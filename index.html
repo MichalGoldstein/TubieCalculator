@@ -4,34 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calorie Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Open Sans', sans-serif;
             margin: 20px;
             line-height: 1.6;
+            background-color: #e0f2f7; /* Pastel blue background */
+            color: #37474f; /* Dark gray text */
+        }
+        h1, h2 {
+            font-family: 'Nunito', sans-serif;
+            color: #37474f;
         }
         select, input, button {
             margin: 10px 0;
             display: block;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #e6e6fa; /* Soft lavender */
+        }
+        button {
+            cursor: pointer;
         }
         .disclaimer {
             margin-top: 30px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 15px; /* Increased padding */
+            background-color: #fff9c4; /* Pale yellow */
+            border: none;
+            border-radius: 10px;
             font-size: 0.9em;
             color: #555;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
         .disclaimer strong {
             color: #d9534f;
         }
+        label {
+            display: block; /* Ensures labels are above inputs */
+            margin-bottom: 5px; /* Adds some space below labels */
+        }
+        .container { /* Added a container for better layout */
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: white; /* Added white background */
+          border-radius: 15px;
+          box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        .output-box { /* Style for the output boxes */
+            display: inline-block; /* Allows width to be set */
+            width: 80px; /* Adjust as needed */
+            height: 20px; /* Adjust as needed */
+            background-color: #eee; /* Light gray background (like disabled select) */
+            border: 1px solid #ddd; /* Similar border */
+            border-radius: 5px;
+            text-align: center; /* Center the text if there is any */
+            margin-left: 5px; /* Add some spacing between the label and box */
+        }
+        .output-box.has-value { /* Style for when a value is present */
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,.1);
+        }
+
     </style>
 </head>
 <body>
+    <div class="container">
     <h1>Calorie Calculator</h1>
     
-    <!-- Dropdowns -->
     <label for="brandSelect">Choose a brand:</label>
     <select id="brandSelect">
         <option value="" selected disabled>Select a brand</option>
@@ -42,29 +88,26 @@
         <option value="" selected disabled>Select a formula</option>
     </select>
 
-    <!-- Output -->
-    <h2>Calorie Content: <span id="calorieContent">N/A</span> kcal/ml</h2>
+    <h2>Calorie Content: <span id="calorieContent" class="output-box"></span> kcal/ml</h2>
 
-    <!-- Calorie Goal Input -->
     <label for="calorieGoal">Enter your calorie goal:</label>
     <input type="number" id="calorieGoal" placeholder="Calorie goal in kcal">
     <button id="calculateVolumeBtn">Calculate Volume</button>
-    <h2>Volume Required: <span id="volumeRequired">N/A</span> ml</h2>
+    <h2>Volume Required: <span id="volumeRequired" class="output-box"></span> ml</h2>
 
-    <!-- Rate/Time Calculations -->
     <label for="infusionHours">Enter hours to infuse:</label>
     <input type="number" id="infusionHours" placeholder="Infusion hours">
     <button id="calculateRateBtn">Calculate Rate</button>
-    <h2>Rate Required: <span id="rateRequired">N/A</span> ml/hr</h2>
+    <h2>Rate Required: <span id="rateRequired" class="output-box"></span> ml/hr</h2>
 
     <label for="infusionRate">Enter infusion rate (ml/hr):</label>
     <input type="number" id="infusionRate" placeholder="Infusion rate">
     <button id="calculateTimeBtn">Calculate Time</button>
-    <h2>Time Required: <span id="timeRequired">N/A</span> hours</h2>
+    <h2>Time Required: <span id="timeRequired" class="output-box"></span> hours</h2>
 
-    <!-- Disclaimer -->
     <div class="disclaimer">
-        <p><strong>Disclaimer:</strong> The information provided on this website is for general informational purposes only. It is not intended as medical advice or to replace consultation with your healthcare provider. Always consult with your medical team before making any decisions regarding your healthcare or nutrition needs.</p>
+       <p><strong>Disclaimer:</strong> The information provided on this website is for general informational purposes only. It is not intended as medical advice or to replace consultation with your healthcare provider. Always consult with your medical team before making any decisions regarding your healthcare or nutrition needs.</p>
+    </div>
     </div>
 
     <script>
@@ -85,6 +128,8 @@
         const volumeRequired = document.getElementById('volumeRequired');
         const rateRequired = document.getElementById('rateRequired');
         const timeRequired = document.getElementById('timeRequired');
+        const outputBoxes = [calorieContent, volumeRequired, rateRequired, timeRequired]
+        outputBoxes.forEach(box => box.textContent = "");
 
         // Populate the brand dropdown
         function populateBrands() {
@@ -113,44 +158,40 @@
 
         // Update calorie content when formula is selected
         formulaSelect.addEventListener('change', () => {
-            calorieContent.textContent = formulaSelect.value;
-        });
+          calorieContent.textContent = formulaSelect.value;
+          calorieContent.classList.add("has-value");
+        })
 
         // Calculate volume required
+        function updateOutput(outputElement, value) {
+          if (!isNaN(value)) {
+            outputElement.textContent = value.toFixed(2);
+            outputElement.classList.add("has-value");
+          } else {
+            outputElement.textContent = "";
+            outputElement.classList.remove("has-value");
+          }
+        }
         document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
             const goal = parseFloat(document.getElementById('calorieGoal').value);
             const calPerMl = parseFloat(formulaSelect.value);
-            if (!isNaN(goal) && !isNaN(calPerMl)) {
-                volumeRequired.textContent = (goal / calPerMl).toFixed(2);
-            } else {
-                volumeRequired.textContent = 'N/A';
-            }
+            updateOutput(volumeRequired, goal / calPerMl);
         });
 
-        // Calculate rate required
         document.getElementById('calculateRateBtn').addEventListener('click', () => {
             const hours = parseFloat(document.getElementById('infusionHours').value);
             const goal = parseFloat(document.getElementById('calorieGoal').value);
             const calPerMl = parseFloat(formulaSelect.value);
-            if (!isNaN(hours) && !isNaN(goal) && !isNaN(calPerMl)) {
-                const volume = goal / calPerMl;
-                rateRequired.textContent = (volume / hours).toFixed(2);
-            } else {
-                rateRequired.textContent = 'N/A';
-            }
+            const volume = goal / calPerMl
+            updateOutput(rateRequired, volume / hours);
         });
 
-        // Calculate time required
         document.getElementById('calculateTimeBtn').addEventListener('click', () => {
             const rate = parseFloat(document.getElementById('infusionRate').value);
             const goal = parseFloat(document.getElementById('calorieGoal').value);
             const calPerMl = parseFloat(formulaSelect.value);
-            if (!isNaN(rate) && !isNaN(goal) && !isNaN(calPerMl)) {
-                const volume = goal / calPerMl;
-                timeRequired.textContent = (volume / rate).toFixed(2);
-            } else {
-                timeRequired.textContent = 'N/A';
-            }
+            const volume = goal / calPerMl
+            updateOutput(timeRequired, volume / rate);
         });
     </script>
 </body>
