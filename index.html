@@ -56,15 +56,17 @@
           border-radius: 15px;
           box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
         }
-        .output-box { /* Style for the output boxes */
-            display: inline-block; /* Allows width to be set */
-            width: 80px; /* Adjust as needed */
-            height: 20px; /* Adjust as needed */
-            background-color: #eee; /* Light gray background (like disabled select) */
-            border: 1px solid #ddd; /* Similar border */
+        .output-box {
+            display: inline-block;
+            padding: 2px 5px; /* Add some padding for visual spacing */
+            background-color: #eee;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            text-align: center; /* Center the text if there is any */
-            margin-left: 5px; /* Add some spacing between the label and box */
+            text-align: center;
+            margin-left: 5px;
+            min-width: 40px; /* Set a minimum width to avoid tiny boxes */
+            white-space: nowrap; /* Prevent text from wrapping */
+            box-sizing: border-box; /* Include padding and border in width calculation */
         }
         .output-box.has-value { /* Style for when a value is present */
             background-color: white;
