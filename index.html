@@ -290,27 +290,65 @@
             const calorieContentValue = data[selectedBrand][selectedFormula];
             let waterContentValue = waterData[selectedBrand][selectedFormula];
 
-            updateOutput(calorieContent, calorieContentValue);
+            updateOutput(calorieContent, calorieContentValue); // Calorie calculation ALWAYS happens
 
-            const waterContent100Container = waterContent100Element.parentNode; // Get the parent of waterContent100
-            let notAvailableMessage = waterContent100Container.querySelector('.not-available'); // Check if message already exists
+            const waterContent100Container = waterContent100Element.parentNode;
+            let notAvailableMessage = waterContent100Container.querySelector('.not-available');
 
             if (waterContentValue === "N/A") {
-                updateOutput(waterContent100Element, ""); // Clear the output box
-                if (!notAvailableMessage) { // Create message only if it doesn't exist
+                updateOutput(waterContent100Element, "");
+                if (!notAvailableMessage) {
                     notAvailableMessage = document.createElement('div');
                     notAvailableMessage.className = 'not-available';
                     notAvailableMessage.textContent = 'Water content not available for this formula.';
-                    waterContent100Container.appendChild(notAvailableMessage); // Append to the parent
+                    waterContent100Container.appendChild(notAvailableMessage);
                 }
+                waterContentValue = 0; // Set waterContentValue to 0 for calculations to avoid NaN.
             } else {
                 updateOutput(waterContent100Element, waterContentValue);
-                if (notAvailableMessage) { // Remove message if it exists
+                if (notAvailableMessage) {
                     waterContent100Container.removeChild(notAvailableMessage);
                 }
             }
+            formulaSelect.value = calorieContentValue;
         });
 
+        document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
+             const goal = parseFloat(document.getElementById('calorieGoal').value);
+            const calPerMl = parseFloat(formulaSelect.value);
+            const volume = goal / calPerMl;
+            updateOutput(volumeRequired, volume);
+            const waterPer100 = parseFloat(waterContent100Element.textContent) || 0;
+            updateOutput(waterContentCalculatedElement, (volume / 100) * waterPer100);
+        });
+
+        document.getElementById('calculateRateBtn').addEventListener('click', () => {
+           const hours = parseFloat(document.getElementById('infusionHours').value);
+            const goal = parseFloat(document.getElementById('calorieGoal').value);
+            const calPerMl = parseFloat(formulaSelect.value);
+            const volume = goal / calPerMl;
+            updateOutput(rateRequired, volume / hours);
+
+            const waterToAdd = parseFloat(waterToAddElement.textContent) || 0;
+            const totalVolume = volume + waterToAdd;
+            const waterPer100 = parseFloat(waterContent100Element.textContent) || 0;
+            updateOutput(waterContentCalculatedElement, (totalVolume/100)* waterPer100);
+            updateOutput(updatedRateElement, totalVolume / hours);
+        });
+
+        document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
+            const waterGoal = parseFloat(document.getElementById('waterGoal').value);
+            const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent) || 0;
+            const volumeRequiredValue = parseFloat(volumeRequired.textContent) || 0;
+
+            if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue)) {
+                const waterToAdd = waterGoal - ((volumeRequiredValue * waterContentPer100) / 100);
+                updateOutput(waterToAddElement, waterToAdd);
+            } else {
+                updateOutput(waterToAddElement, NaN);
+            }
+        });
+        
         function updateOutput(outputElement, value) {
             if (!isNaN(value)) {
                 outputElement.textContent = value.toFixed(2);
