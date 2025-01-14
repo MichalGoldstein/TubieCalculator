@@ -14,7 +14,7 @@
             font-family: 'Open Sans', sans-serif;
             margin: 20px;
             line-height: 1.6;
-            background-color: #3495b0;
+            background-color: #EFFAFD;
             color: #37474f;
             display: flex;
             flex-direction: column;
@@ -308,7 +308,7 @@
                 waterContentValue = 0; // Set to 0 for calculations
             } else {
                 updateOutput(waterContent100Element, waterContentValue);
-                if (notAvailableMessage) {
+                if (notAvailableMessage && notAvailableMessage.hasChildNodes()) { // Check for child nodes
                     waterContent100Container.removeChild(notAvailableMessage);
                 }
             }
