@@ -5,7 +5,7 @@
      crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calorie Calculator</title>
+    <title>Tube Feeding Calculator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
@@ -15,8 +15,8 @@
             font-family: 'Open Sans', sans-serif;
             margin: 20px;
             line-height: 1.6;
-            background-color: #e0f2f7; /* Pastel blue background */
-            color: #37474f; /* Dark gray text */
+            background-color: #e0f2f7;
+            color: #37474f;
         }
         h1, h2 {
             font-family: 'Nunito', sans-serif;
@@ -29,15 +29,15 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #e6e6fa; /* Soft lavender */
+            background-color: #e6e6fa;
         }
         button {
             cursor: pointer;
         }
         .disclaimer {
             margin-top: 30px;
-            padding: 15px; /* Increased padding */
-            background-color: #fff9c4; /* Pale yellow */
+            padding: 15px;
+            background-color: #fff9c4;
             border: none;
             border-radius: 10px;
             font-size: 0.9em;
@@ -48,33 +48,45 @@
             color: #d9534f;
         }
         label {
-            display: block; /* Ensures labels are above inputs */
-            margin-bottom: 5px; /* Adds some space below labels */
+            display: block;
+            margin-bottom: 5px;
         }
-        .container { /* Added a container for better layout */
-          max-width: 600px;
+        .container {
+          max-width: 900px; /* Increased max-width */
           margin: 0 auto;
           padding: 20px;
-          background-color: white; /* Added white background */
+          background-color: white;
           border-radius: 15px;
           box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
         }
         .output-box {
             display: inline-block;
-            padding: 2px 5px; /* Add some padding for visual spacing */
+            padding: 2px 5px;
             background-color: #eee;
             border: 1px solid #ddd;
             border-radius: 5px;
             text-align: center;
             margin-left: 5px;
-            min-width: 40px; /* Set a minimum width to avoid tiny boxes */
-            white-space: nowrap; /* Prevent text from wrapping */
-            box-sizing: border-box; /* Include padding and border in width calculation */
+            min-width: 40px;
+            white-space: nowrap;
+            box-sizing: border-box;
         }
-        .output-box.has-value { /* Style for when a value is present */
+        .output-box.has-value {
             background-color: white;
             border: 1px solid #ccc;
             box-shadow: inset 1px 1px 2px rgba(0,0,0,.1);
+        }
+        .columns {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
     </style>
@@ -89,68 +101,76 @@
     </nav>
     
     <div class="container">
-    <h1>Tube Feeding Calculator</h1>
-    
-    <label for="brandSelect">Choose a brand:</label>
-    <select id="brandSelect">
-        <option value="" selected disabled>Select a brand</option>
-    </select>
+        <h1>Tube Feeding Calculator</h1>
 
-    <label for="formulaSelect">Choose a formula:</label>
-    <select id="formulaSelect" disabled>
-        <option value="" selected disabled>Select a formula</option>
-    </select>
+        <label for="brandSelect">Choose a brand:</label>
+        <select id="brandSelect">
+            <option value="" selected disabled>Select a brand</option>
+        </select>
 
-    <h2>Calorie Content: <span id="calorieContent" class="output-box"></span> kcal/ml</h2>
-    <h2>Water Content: <span id="waterContent" class="output-box"></span> ml/100ml</h2>
+        <label for="formulaSelect">Choose a formula:</label>
+        <select id="formulaSelect" disabled>
+            <option value="" selected disabled>Select a formula</option>
+        </select>
 
-    <label for="calorieGoal">Enter your calorie goal:</label>
-    <input type="number" id="calorieGoal" placeholder="Calorie goal in kcal">
-    <button id="calculateVolumeBtn">Calculate Volume</button>
-    <h2>Volume Required: <span id="volumeRequired" class="output-box"></span> ml</h2>
+        <div class="columns">
+            <div class="column">
+                <h2>Calorie Content: <span id="calorieContent" class="output-box"></span> kcal/ml</h2>
 
-    <label for="infusionHours">Enter hours to infuse:</label>
-    <input type="number" id="infusionHours" placeholder="Infusion hours">
-    <button id="calculateRateBtn">Calculate Rate</button>
-    <h2>Rate Required: <span id="rateRequired" class="output-box"></span> ml/hr</h2>
+                <label for="calorieGoal">Enter your calorie goal:</label>
+                <input type="number" id="calorieGoal" placeholder="Calorie goal in kcal">
+                <button id="calculateVolumeBtn">Calculate Volume</button>
+                <h2>Volume Required: <span id="volumeRequired" class="output-box"></span> ml</h2>
 
-    <label for="infusionRate">Enter infusion rate (ml/hr):</label>
-    <input type="number" id="infusionRate" placeholder="Infusion rate">
-    <button id="calculateTimeBtn">Calculate Time</button>
-    <h2>Time Required: <span id="timeRequired" class="output-box"></span> hours</h2>
+                <label for="infusionHours">Enter hours to infuse:</label>
+                <input type="number" id="infusionHours" placeholder="Infusion hours">
+                <button id="calculateRateBtn">Calculate Rate</button>
+                <h2>Rate Required: <span id="rateRequired" class="output-box"></span> ml/hr</h2>
+            </div>
 
-    <div class="disclaimer">
-       <p><strong>Disclaimer:</strong> The information provided on this website is for general informational purposes only. It is not intended as medical advice or to replace consultation with your healthcare provider. Always consult with your medical team before making any decisions regarding your healthcare or nutrition needs.</p>
-    </div>
+            <div class="column">
+                <h2>Water Content (per 100ml): <span id="waterContent100" class="output-box"></span> ml</h2>
+                <h2>Water Content (in calculated volume): <span id="waterContentCalculated" class="output-box"></span> ml</h2>
+
+                <label for="waterGoal">Enter your water goal:</label>
+                <input type="number" id="waterGoal" placeholder="Water goal in ml">
+                <button id="calculateWaterToAddBtn">Calculate Water to Add</button>
+                <h2>Water to Add: <span id="waterToAdd" class="output-box"></span> ml</h2>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            <p><strong>Disclaimer:</strong> The information provided on this website is for general informational purposes only. It is not intended as medical advice or to replace consultation with your healthcare provider. Always consult with your medical team before making any decisions regarding your healthcare or nutrition needs.</p>
+        </div>
     </div>
 
     <script>
-        let data = {}; // Store the data
+        let data = {};
         let waterData = {};
 
-        // Fetch data.json
         fetch('data.json')
             .then(response => response.json())
             .then(json => {
                 data = json;
                 populateBrands();
+                fetch('water.json')
+                    .then(response => response.json())
+                    .then(json => {
+                        waterData = json;
+                    })
+                    .catch(err => console.error('Error loading water.json:', err));
             })
             .catch(err => console.error('Error loading data.json:', err));
-
-        fetch('water.json')
-            .then(response => response.json())
-            .then(json => {
-                waterData = json;
-            })
-            .catch(err => console.error('Error loading water.json:', err));
 
         const brandSelect = document.getElementById('brandSelect');
         const formulaSelect = document.getElementById('formulaSelect');
         const calorieContent = document.getElementById('calorieContent');
         const volumeRequired = document.getElementById('volumeRequired');
         const rateRequired = document.getElementById('rateRequired');
-        const timeRequired = document.getElementById('timeRequired');
-        const outputBoxes = [calorieContent, volumeRequired, rateRequired, timeRequired]
+        const waterContent100Element = document.getElementById('waterContent100');
+        const waterContentCalculatedElement = document.getElementById('waterContentCalculated');
+        const waterToAddElement = document.getElementById('waterToAdd');
+        const outputBoxes = [calorieContent, volumeRequired, rateRequired, waterContent100Element, waterContentCalculatedElement, waterToAddElement]
         outputBoxes.forEach(box => box.textContent = "");
 
         // Populate the brand dropdown
@@ -161,9 +181,8 @@
                 option.textContent = brand;
                 brandSelect.appendChild(option);
             });
-            }
+        }
 
-        // Populate the formula dropdown based on selected brand
         brandSelect.addEventListener('change', () => {
             formulaSelect.innerHTML = '<option value="" selected disabled>Select a formula</option>';
             formulaSelect.disabled = false;
@@ -178,13 +197,14 @@
             });
         });
 
-        // Update calorie content when formula is selected
         formulaSelect.addEventListener('change', () => {
-          calorieContent.textContent = formulaSelect.value;
-          calorieContent.classList.add("has-value");
-        })
-
-        // Calculate volume required
+            const selectedBrand = brandSelect.value;
+            const selectedFormula = formulaSelect.options[formulaSelect.selectedIndex].text;
+            const calorieContentValue = data[selectedBrand][selectedFormula];
+            const waterContentValue = waterData[selectedBrand][selectedFormula];
+            updateOutput(calorieContent, calorieContentValue)
+            updateOutput(waterContent100Element, waterContentValue)
+        });
         function updateOutput(outputElement, value) {
           if (!isNaN(value)) {
             outputElement.textContent = value.toFixed(2);
@@ -197,7 +217,10 @@
         document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
             const goal = parseFloat(document.getElementById('calorieGoal').value);
             const calPerMl = parseFloat(formulaSelect.value);
-            updateOutput(volumeRequired, goal / calPerMl);
+            const volume = goal / calPerMl
+            updateOutput(volumeRequired, volume);
+            const waterPer100 = parseFloat(waterContent100Element.textContent)
+            updateOutput(waterContentCalculatedElement, (volume/100)*waterPer100)
         });
 
         document.getElementById('calculateRateBtn').addEventListener('click', () => {
@@ -207,13 +230,10 @@
             const volume = goal / calPerMl
             updateOutput(rateRequired, volume / hours);
         });
-
-        document.getElementById('calculateTimeBtn').addEventListener('click', () => {
-            const rate = parseFloat(document.getElementById('infusionRate').value);
-            const goal = parseFloat(document.getElementById('calorieGoal').value);
-            const calPerMl = parseFloat(formulaSelect.value);
-            const volume = goal / calPerMl
-            updateOutput(timeRequired, volume / rate);
+        document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
+            const waterGoal = parseFloat(document.getElementById('waterGoal').value);
+            const waterInFormula = parseFloat(waterContentCalculatedElement.textContent);
+            updateOutput(waterToAddElement, waterGoal - waterInFormula);
         });
     </script>
 </body>
