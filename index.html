@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9402124382820996"
-     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tube Feeding Calculator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="icon" href="/favicon.png" type="image/x-icon">
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
@@ -17,22 +14,83 @@
             line-height: 1.6;
             background-color: #e0f2f7;
             color: #37474f;
+            display: flex; /* Center content vertically and horizontally */
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body covers full viewport height */
+        }
+        main {
+            flex: 1; /* Allow main content to expand and fill available space */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+        .container {
+            max-width: 900px;
+            padding: 30px; /* Increased padding */
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
         }
         h1, h2 {
             font-family: 'Nunito', sans-serif;
             color: #37474f;
+            text-align: center; /* Center headings */
+        }
+        .input-group { /* Group labels and inputs */
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
         select, input, button {
-            margin: 10px 0;
-            display: block;
-            padding: 8px;
+            width: calc(100% - 16px); /* Full width minus padding */
+            padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #e6e6fa;
+            border-radius: 5px;
+            box-sizing: border-box; /* Include padding in width */
+            margin-bottom: 10px;
         }
         button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output-box {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-left: 5px;
+            min-width: 50px;
+            text-align: center;
+        }
+        .columns {
+            display: grid; /* Use grid for better responsiveness */
+            grid-template-columns: 1fr 1fr; /* Two equal columns */
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .column {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
         .disclaimer {
             margin-top: 30px;
@@ -43,101 +101,101 @@
             font-size: 0.9em;
             color: #555;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center disclaimer text */
         }
-        .disclaimer strong {
-            color: #d9534f;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .container {
-          max-width: 900px; /* Increased max-width */
-          margin: 0 auto;
-          padding: 20px;
-          background-color: white;
-          border-radius: 15px;
-          box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-        }
-        .output-box {
-            display: inline-block;
-            padding: 2px 5px;
-            background-color: #eee;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        nav {
             text-align: center;
-            margin-left: 5px;
-            min-width: 40px;
-            white-space: nowrap;
-            box-sizing: border-box;
+            margin-bottom: 20px;
         }
-        .output-box.has-value {
-            background-color: white;
-            border: 1px solid #ccc;
-            box-shadow: inset 1px 1px 2px rgba(0,0,0,.1);
+        nav a {
+            margin: 0 10px;
+            color: #37474f;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        .columns {
-            display: flex;
-            gap: 20px;
-        }
-        .column {
-            flex: 1;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 10px;
-            background-color: white;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        nav a:hover {
+            background-color: #e0e0e0;
         }
 
     </style>
 </head>
 <body>
-    <nav style="text-align: center; margin-bottom: 20px;">
-        <a href="index.html" style="margin: 0 10px; color: #37474f; text-decoration: none;">Home</a>
-        <a href="about.html" style="margin: 0 10px; color: #37474f; text-decoration: none;">About</a>
-        <a href="privacy.html" style="margin: 0 10px; color: #37474f; text-decoration: none;">Privacy Policy</a>
-        <a href="terms.html" style="margin: 0 10px; color: #37474f; text-decoration: none;">Terms of Service</a>
-        <a href="contact.html" style="margin: 0 10px; color: #37474f; text-decoration: none;">Contact Us</a>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="contact.html">Contact Us</a>
     </nav>
-    
+    <main>
     <div class="container">
         <h1>Tube Feeding Calculator</h1>
 
-        <label for="brandSelect">Choose a brand:</label>
-        <select id="brandSelect">
-            <option value="" selected disabled>Select a brand</option>
-        </select>
-
-        <label for="formulaSelect">Choose a formula:</label>
-        <select id="formulaSelect" disabled>
-            <option value="" selected disabled>Select a formula</option>
-        </select>
+        <div class="input-group">
+            <label for="brandSelect">Choose a brand:</label>
+            <select id="brandSelect">
+                <option value="" selected disabled>Select a brand</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="formulaSelect">Choose a formula:</label>
+            <select id="formulaSelect" disabled>
+                <option value="" selected disabled>Select a formula</option>
+            </select>
+        </div>
 
         <div class="columns">
             <div class="column">
-                <h2>Calorie Content: <span id="calorieContent" class="output-box"></span> kcal/ml</h2>
-
-                <label for="calorieGoal">Enter your calorie goal:</label>
-                <input type="number" id="calorieGoal" placeholder="Calorie goal in kcal">
+                <h2>Calorie Calculations</h2>
+                <div class="input-group">
+                    <label for="calorieContent">Calorie Content:</label>
+                    <span id="calorieContent" class="output-box"></span> kcal/ml
+                </div>
+                <div class="input-group">
+                    <label for="calorieGoal">Enter your calorie goal:</label>
+                    <input type="number" id="calorieGoal" placeholder="Calorie goal in kcal">
+                </div>
                 <button id="calculateVolumeBtn">Calculate Volume</button>
-                <h2>Volume Required: <span id="volumeRequired" class="output-box"></span> ml</h2>
-
-                <label for="infusionHours">Enter hours to infuse:</label>
-                <input type="number" id="infusionHours" placeholder="Infusion hours">
+                <div class="input-group">
+                    <label for="volumeRequired">Volume Required:</label>
+                    <span id="volumeRequired" class="output-box"></span> ml
+                </div>
+                <div class="input-group">
+                    <label for="infusionHours">Enter hours to infuse:</label>
+                    <input type="number" id="infusionHours" placeholder="Infusion hours">
+                </div>
                 <button id="calculateRateBtn">Calculate Rate</button>
-                <h2>Rate Required: <span id="rateRequired" class="output-box"></span> ml/hr</h2>
+                <div class="input-group">
+                    <label for="rateRequired">Rate Required:</label>
+                    <span id="rateRequired" class="output-box"></span> ml/hr
+                </div>
             </div>
 
             <div class="column">
-                <h2>Water Content (per 100ml): <span id="waterContent100" class="output-box"></span> ml</h2>
-                <h2>Water Content (in calculated volume): <span id="waterContentCalculated" class="output-box"></span> ml</h2>
-                
-                <label for="waterGoal">Enter your water goal:</label>
-                <input type="number" id="waterGoal" placeholder="Water goal in ml">
+                <h2>Water Calculations</h2>
+                <div class="input-group">
+                    <label for="waterContent100">Water Content (per 100ml):</label>
+                    <span id="waterContent100" class="output-box"></span> ml
+                </div>
+                <div class="input-group">
+                    <label for="waterContentCalculated">Water Content (in calculated volume):</label>
+                    <span id="waterContentCalculated" class="output-box"></span> ml
+                </div>
+                <div class="input-group">
+                    <label for="waterGoal">Enter your water goal:</label>
+                    <input type="number" id="waterGoal" placeholder="Water goal in ml">
+                </div>
                 <button id="calculateWaterToAddBtn">Calculate Water to Add</button>
-                <h2>Water to Add: <span id="waterToAdd" class="output-box"></span> ml</h2>
-                <h2>Updated Rate (with added water): <span id="updatedRate" class="output-box"></span> ml/hr</h2>
-
+                <div class="input-group">
+                    <label for="waterToAdd">Water to Add:</label>
+                    <span id="waterToAdd" class="output-box"></span> ml
+                </div>
+                <div class="input-group">
+                    <label for="updatedRate">Updated Rate (with added water):</label>
+                    <span id="updatedRate" class="output-box"></span> ml/hr
+                </div>
             </div>
         </div>
 
@@ -145,6 +203,7 @@
             <p><strong>Disclaimer:</strong> The information provided on this website is for general informational purposes only. It is not intended as medical advice or to replace consultation with your healthcare provider. Always consult with your medical team before making any decisions regarding your healthcare or nutrition needs.</p>
         </div>
     </div>
+    </main>
 
     <script>
         let data = {};
@@ -172,10 +231,10 @@
         const waterContent100Element = document.getElementById('waterContent100');
         const waterContentCalculatedElement = document.getElementById('waterContentCalculated');
         const waterToAddElement = document.getElementById('waterToAdd');
-        const outputBoxes = [calorieContent, volumeRequired, rateRequired, waterContent100Element, waterContentCalculatedElement, waterToAddElement]
+        const updatedRateElement = document.getElementById('updatedRate');
+        const outputBoxes = [calorieContent, volumeRequired, rateRequired, waterContent100Element, waterContentCalculatedElement, waterToAddElement, updatedRateElement];
         outputBoxes.forEach(box => box.textContent = "");
 
-        // Populate the brand dropdown
         function populateBrands() {
             Object.keys(data).forEach(brand => {
                 const option = document.createElement('option');
@@ -204,41 +263,28 @@
             const selectedFormula = formulaSelect.options[formulaSelect.selectedIndex].text;
             const calorieContentValue = data[selectedBrand][selectedFormula];
             const waterContentValue = waterData[selectedBrand][selectedFormula];
-            updateOutput(calorieContent, calorieContentValue)
-            updateOutput(waterContent100Element, waterContentValue)
+            updateOutput(calorieContent, calorieContentValue);
+            updateOutput(waterContent100Element, waterContentValue);
         });
+
         function updateOutput(outputElement, value) {
-          if (!isNaN(value)) {
-            outputElement.textContent = value.toFixed(2);
-            outputElement.classList.add("has-value");
-          } else {
-            outputElement.textContent = "";
-            outputElement.classList.remove("has-value");
-          }
+            if (!isNaN(value)) {
+                outputElement.textContent = value.toFixed(2);
+                outputElement.classList.add("has-value");
+            } else {
+                outputElement.textContent = "";
+                outputElement.classList.remove("has-value");
+            }
         }
+
         document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
             const goal = parseFloat(document.getElementById('calorieGoal').value);
             const calPerMl = parseFloat(formulaSelect.value);
-            const volume = goal / calPerMl
+            const volume = goal / calPerMl;
             updateOutput(volumeRequired, volume);
-            const waterPer100 = parseFloat(waterContent100Element.textContent)
-            updateOutput(waterContentCalculatedElement, (volume/100)*waterPer100)
+            const waterPer100 = parseFloat(waterContent100Element.textContent);
+            updateOutput(waterContentCalculatedElement, (volume / 100) * waterPer100);
         });
-
-        document.getElementById('calculateRateBtn').addEventListener('click', () => {
-            const hours = parseFloat(document.getElementById('infusionHours').value);
-            const goal = parseFloat(document.getElementById('calorieGoal').value);
-            const calPerMl = parseFloat(formulaSelect.value);
-            const volume = goal / calPerMl
-            updateOutput(rateRequired, volume / hours);
-        });
-        document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
-            const waterGoal = parseFloat(document.getElementById('waterGoal').value);
-            const waterInFormula = parseFloat(waterContentCalculatedElement.textContent);
-            updateOutput(waterToAddElement, waterGoal - waterInFormula);
-        });
-
-        const updatedRateElement = document.getElementById('updatedRate'); // Get the new element
 
         document.getElementById('calculateRateBtn').addEventListener('click', () => {
             const hours = parseFloat(document.getElementById('infusionHours').value);
@@ -247,17 +293,13 @@
             const volume = goal / calPerMl;
             updateOutput(rateRequired, volume / hours);
 
-            // Calculate updated rate
             const waterToAdd = parseFloat(waterToAddElement.textContent);
             if (!isNaN(waterToAdd) && !isNaN(volume) && !isNaN(hours)) {
                 const totalVolume = volume + waterToAdd;
-
-                // Update water content in calculated volume before calculating rate
                 updateOutput(waterContentCalculatedElement, (totalVolume/100)*parseFloat(waterContent100Element.textContent));
-
                 updateOutput(updatedRateElement, totalVolume / hours);
             } else {
-                updateOutput(updatedRateElement, NaN); // Or an appropriate message
+                updateOutput(updatedRateElement, NaN);
             }
         });
 
