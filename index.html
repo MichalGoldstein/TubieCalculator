@@ -251,6 +251,10 @@
             const waterToAdd = parseFloat(waterToAddElement.textContent);
             if (!isNaN(waterToAdd) && !isNaN(volume) && !isNaN(hours)) {
                 const totalVolume = volume + waterToAdd;
+
+                // Update water content in calculated volume before calculating rate
+                updateOutput(waterContentCalculatedElement, (totalVolume/100)*parseFloat(waterContent100Element.textContent));
+
                 updateOutput(updatedRateElement, totalVolume / hours);
             } else {
                 updateOutput(updatedRateElement, NaN); // Or an appropriate message
