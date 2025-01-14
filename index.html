@@ -131,11 +131,13 @@
             <div class="column">
                 <h2>Water Content (per 100ml): <span id="waterContent100" class="output-box"></span> ml</h2>
                 <h2>Water Content (in calculated volume): <span id="waterContentCalculated" class="output-box"></span> ml</h2>
-
+                
                 <label for="waterGoal">Enter your water goal:</label>
                 <input type="number" id="waterGoal" placeholder="Water goal in ml">
                 <button id="calculateWaterToAddBtn">Calculate Water to Add</button>
                 <h2>Water to Add: <span id="waterToAdd" class="output-box"></span> ml</h2>
+                <h2>Updated Rate (with added water): <span id="updatedRate" class="output-box"></span> ml/hr</h2>
+
             </div>
         </div>
 
@@ -235,6 +237,26 @@
             const waterInFormula = parseFloat(waterContentCalculatedElement.textContent);
             updateOutput(waterToAddElement, waterGoal - waterInFormula);
         });
+
+        const updatedRateElement = document.getElementById('updatedRate'); // Get the new element
+
+        document.getElementById('calculateRateBtn').addEventListener('click', () => {
+            const hours = parseFloat(document.getElementById('infusionHours').value);
+            const goal = parseFloat(document.getElementById('calorieGoal').value);
+            const calPerMl = parseFloat(formulaSelect.value);
+            const volume = goal / calPerMl;
+            updateOutput(rateRequired, volume / hours);
+
+            // Calculate updated rate
+            const waterToAdd = parseFloat(waterToAddElement.textContent);
+            if (!isNaN(waterToAdd) && !isNaN(volume) && !isNaN(hours)) {
+                const totalVolume = volume + waterToAdd;
+                updateOutput(updatedRateElement, totalVolume / hours);
+            } else {
+                updateOutput(updatedRateElement, NaN); // Or an appropriate message
+            }
+        });
+
     </script>
 </body>
 </html>
