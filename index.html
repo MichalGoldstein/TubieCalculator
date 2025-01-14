@@ -14,7 +14,7 @@
             font-family: 'Open Sans', sans-serif;
             margin: 20px;
             line-height: 1.6;
-            background-color: #EFFAFD;
+            background-color: #021d24;
             color: #37474f;
             display: flex;
             flex-direction: column;
@@ -308,7 +308,7 @@
                 waterContentValue = 0; // Set to 0 for calculations
             } else {
                 updateOutput(waterContent100Element, waterContentValue);
-                if (notAvailableMessage && notAvailableMessage.hasChildNodes()) { // Check for child nodes
+                if (notAvailableMessage && notAvailableMessage.textContent === 'Water content not available for this formula.') { // Check for "N/A" text content
                     waterContent100Container.removeChild(notAvailableMessage);
                 }
             }
