@@ -1,0 +1,93 @@
+{
+    "Nestle": {
+        "COMPLEAT Original 1.5": 76,
+        "COMPLEAT Peptide 1.0": 83.6,
+        "COMPLEAT Organic Blends": 81,
+        "Nutren 1.0 Fiber": 83.6,
+        "COMPLEAT Original 1.0": 82.8,
+        "Nutren 2.0": 69.2,
+        "Isosource 1.5": 76.4,
+        "Nutren 1.5": 76.4,
+        "Fibersource HN": 80.8,
+        "Isosource HN": 80.8,
+        "Vivonex Plus": 83.33,
+        "Vivonex T.E.N.": 83.33,
+        "Compleat Standard 1.4": 77.6,
+        "Compleat Peptide 1.5": 76,
+        "Diabetisource AC": 81.6,
+        "Peptamen": 84.8,
+        "Peptamen with PREBIO": 84.4,
+        "Peptamen 1.5 with PREBIO": 77.2,
+        "Peptamen AF": 81.2,
+        "PEPTAMEN 1.5": 76.8,
+        "Tolerex": 85
+    },
+    
+    "Kate Farms": {
+        "Standard 1.4": 1.4,
+        "Standard 1.0": 1.0,
+        "Peptide 1.5": 1.5,
+        "Peptide 1.0": 1.0,
+        "Glucose Support 1.2": 1.2,
+        "Renal Support 1.8": 1.8
+    },
+
+    "Functional Formularies": {
+        "Liquid Hope": 1.27,
+        "Liquid Hope Peptide": 1.41,
+        "Liquid Hope Peptide High Protein": 1.47,
+        "Nourish": 1.13,
+        "Nourish Peptide": 1.47,
+        "Keto": 2.58
+    },
+
+    "Real Food Blends": {
+        "Turkey, Sweet Potatoes & Peaches": 1.3,
+        "Chicken, Carrots & Brown Rice": 1.4,
+        "Beef, Potatoes & Spinach": 1.3,
+        "Salmon, Oats & Squash": 1.3,
+        "Quinoa, Kale & Hemp": 1.4,
+        "Eggs, Apples & Oats": 1.3,
+        "Select Chicken, Zucchini & Potatoes": 1.6,
+        "Select Turkey, Pears & Pumpkin": 1.6
+    },
+
+    "Abbott": {
+        "Glucerna 1.2 Cal": 1.2,
+        "Jevity 1 Cal": 1.0,
+        "Jevity 1.2 Cal": 1.2,
+        "Jevity 1.5 Cal": 1.5,
+        "LiquiProtein": 0.67,
+        "Nepro": 1.8,
+        "Osmolite 1.2 Cal": 1.2,
+        "Promote": 1.0,
+        "Suplena": 1.8,
+        "TwoCal HN": 2.0,
+        "Vital Peptide 1 Cal": 1.0,
+        "Vital Peptide 1.5 Cal": 1.5,
+        "Pivot 1.5 Cal": 1.5,
+        "PediaSure Complete Grow & Gain Reduced Sugar": 1.0,
+        "PediaSure Complete Grow & Gain": 1.0,
+        "PediaSure": 1.0,
+        "PediaSure Fiber": 1.0,
+        "PediaSure Plus": 1.5,
+        "PediaSure Peptide 1 Cal": 1.0
+    },
+
+    "Nutricia": {
+        "Fortimel Advanced Powder 1kcal": 1.0,
+        "Fortimel Powder": 1.0,
+        "KetoCal 3:1": 0.66,
+        "KetoCal 4:1": 1.5,
+        "KetoCal 4:1 LQ": 1.5,
+        "Neocate Junior": 1.0,
+        "Neocate LCP": 0.67,
+        "Neocate SYNEO": 0.68,
+        "Nutrison Advanced Cubison": 1.0,
+        "Nutrison Energy Multi Fibre": 1.5,
+        "Nutrison Energy": 1.5,
+        "Nutrison Advanced Protison": 1.28,
+        "Nutrison Protein Intense": 1.26,
+        "Neocate Splash": 1.0
+    }
+}

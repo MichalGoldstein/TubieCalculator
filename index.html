@@ -102,6 +102,7 @@
     </select>
 
     <h2>Calorie Content: <span id="calorieContent" class="output-box"></span> kcal/ml</h2>
+    <h2>Water Content: <span id="waterContent" class="output-box"></span> ml/100ml</h2>
 
     <label for="calorieGoal">Enter your calorie goal:</label>
     <input type="number" id="calorieGoal" placeholder="Calorie goal in kcal">
@@ -125,6 +126,7 @@
 
     <script>
         let data = {}; // Store the data
+        let waterData = {};
 
         // Fetch data.json
         fetch('data.json')
@@ -134,6 +136,13 @@
                 populateBrands();
             })
             .catch(err => console.error('Error loading data.json:', err));
+
+        fetch('water.json')
+            .then(response => response.json())
+            .then(json => {
+                waterData = json;
+            })
+            .catch(err => console.error('Error loading water.json:', err));
 
         const brandSelect = document.getElementById('brandSelect');
         const formulaSelect = document.getElementById('formulaSelect');
@@ -152,7 +161,7 @@
                 option.textContent = brand;
                 brandSelect.appendChild(option);
             });
-        }
+            }
 
         // Populate the formula dropdown based on selected brand
         brandSelect.addEventListener('change', () => {
