@@ -118,6 +118,13 @@
             text-align: center;
         }
 
+        .not-available { /* Style for "N/A" messages */
+            font-style: italic;
+            color: gray;
+            margin-top: 5px; /* Add some spacing */
+            text-align: center;
+        }
+
         nav {
             text-align: center;
             margin-bottom: 20px;
@@ -281,9 +288,27 @@
             const selectedBrand = brandSelect.value;
             const selectedFormula = formulaSelect.options[formulaSelect.selectedIndex].text;
             const calorieContentValue = data[selectedBrand][selectedFormula];
-            const waterContentValue = waterData[selectedBrand][selectedFormula];
+            let waterContentValue = waterData[selectedBrand][selectedFormula];
+
             updateOutput(calorieContent, calorieContentValue);
-            updateOutput(waterContent100Element, waterContentValue);
+
+            const waterContent100Container = waterContent100Element.parentNode; // Get the parent of waterContent100
+            let notAvailableMessage = waterContent100Container.querySelector('.not-available'); // Check if message already exists
+
+            if (waterContentValue === "N/A") {
+                updateOutput(waterContent100Element, ""); // Clear the output box
+                if (!notAvailableMessage) { // Create message only if it doesn't exist
+                    notAvailableMessage = document.createElement('div');
+                    notAvailableMessage.className = 'not-available';
+                    notAvailableMessage.textContent = 'Water content not available for this formula.';
+                    waterContent100Container.appendChild(notAvailableMessage); // Append to the parent
+                }
+            } else {
+                updateOutput(waterContent100Element, waterContentValue);
+                if (notAvailableMessage) { // Remove message if it exists
+                    waterContent100Container.removeChild(notAvailableMessage);
+                }
+            }
         });
 
         function updateOutput(outputElement, value) {
