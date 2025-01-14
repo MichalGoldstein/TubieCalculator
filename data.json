@@ -35,9 +35,11 @@
     "Functional Formularies": {
         "Liquid Hope": 1.27,
         "Liquid Hope Peptide": 1.41,
-        "Liquid Hope Peptide High Protein": 1.47,
+        "Liquid Hope Peptide High Protein": 1.46,
+        "Liquid Hope Peptide Berry Medley": 1.41,
         "Nourish": 1.13,
-        "Nourish Peptide": 1.47,
+        "Nourish Peptide": 1.46,
+        "Nourish Peptide Berry Medley": 1.46,
         "Keto": 2.58
     },
 
@@ -66,12 +68,17 @@
         "Vital Peptide 1 Cal": 1.0,
         "Vital Peptide 1.5 Cal": 1.5,
         "Pivot 1.5 Cal": 1.5,
-        "PediaSure Complete Grow & Gain Reduced Sugar": 1.0,
-        "PediaSure Complete Grow & Gain": 1.0,
-        "PediaSure": 1.0,
-        "PediaSure Fiber": 1.0,
-        "PediaSure Plus": 1.5,
-        "PediaSure Peptide 1 Cal": 1.0
+        "PediaSure Enteral Formula 1.0 Cal with Fiber": 1.0,
+        "PediaSure Grow & Gain with Fiber": 1.0,
+        "PediaSure Enteral Formula 1.0 Cal": 1.0,
+        "PediaSure Peptide 1.5 Cal": 1.5,
+        "PediaSure 1.5 Cal": 1.5,
+        "PediaSure 1.5 Cal with Fiber": 1.5,
+        "PediaSure Reduced Calorie": 0.63,
+        "PediaSure Grow & Gain Therapeutic Nutrition Shake": 1.014,
+        "PediaSure SideKicks Shake": 0.76,
+        "PediaSure Peptide 1.0 Cal": 1.0,
+        "PediaSure Grow & Gain Shake": 1.014
     },
 
     "Nutricia": {
