@@ -290,20 +290,22 @@
             const calorieContentValue = data[selectedBrand][selectedFormula];
             let waterContentValue = waterData[selectedBrand][selectedFormula];
 
-            updateOutput(calorieContent, calorieContentValue); // Calorie calculation ALWAYS happens
+            updateOutput(calorieContent, calorieContentValue);
 
             const waterContent100Container = waterContent100Element.parentNode;
             let notAvailableMessage = waterContent100Container.querySelector('.not-available');
 
             if (waterContentValue === "N/A") {
-                updateOutput(waterContent100Element, "");
+                updateOutput(waterContent100Element, ""); // Clear output box
+
                 if (!notAvailableMessage) {
                     notAvailableMessage = document.createElement('div');
                     notAvailableMessage.className = 'not-available';
-                    notAvailableMessage.textContent = 'Water content not available for this formula.';
-                    waterContent100Container.appendChild(notAvailableMessage);
+                    waterContent100Container.appendChild(notAvailableMessage); // Append FIRST
                 }
-                waterContentValue = 0; // Set waterContentValue to 0 for calculations to avoid NaN.
+                notAvailableMessage.textContent = 'Water content not available for this formula.'; // THEN set text
+
+                waterContentValue = 0; // Set to 0 for calculations
             } else {
                 updateOutput(waterContent100Element, waterContentValue);
                 if (notAvailableMessage) {
@@ -348,7 +350,7 @@
                 updateOutput(waterToAddElement, NaN);
             }
         });
-        
+
         function updateOutput(outputElement, value) {
             if (!isNaN(value)) {
                 outputElement.textContent = value.toFixed(2);
