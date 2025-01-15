@@ -393,13 +393,15 @@
 
         document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
             const waterGoal = parseFloat(document.getElementById('waterGoal').value);
-            const waterCalculated = parseFloat(waterContentCalculatedElement.textContent) || 0;
-            const waterToAdd = waterGoal - waterCalculated;
-            updateOutput(waterToAddElement, waterToAdd > 0 ? waterToAdd : 0);
-            const hours = parseFloat(document.getElementById('infusionHours').value);
-            const volume = parseFloat(volumeRequired.textContent) || 0;
-            const updatedRate = (volume + (waterToAdd > 0 ? waterToAdd : 0)) / hours;
-            updateOutput(updatedRateElement, updatedRate);
+            const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
+            const volumeRequiredValue = parseFloat(volumeRequired.textContent); // Parse volumeRequired.textContent
+
+            if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue)) { // Check if all values are valid
+                const waterToAdd = Math.max(0, waterGoal - ((volumeRequiredValue * waterContentPer100) / 100));
+                updateOutput(waterToAddElement, waterToAdd);
+            } else {
+                updateOutput(waterToAddElement, NaN); // Or display an error message
+            }
         });
 
         function updateOutput(element, value) {
@@ -432,24 +434,24 @@
             }
         });
 
-        document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
-            const waterGoal = parseFloat(document.getElementById('waterGoal').value);
-            const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
-            const volumeRequiredValue = parseFloat(volumeRequired.textContent); // Parse volumeRequired.textContent
+        // document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
+        //     const waterGoal = parseFloat(document.getElementById('waterGoal').value);
+        //     const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
+        //     const volumeRequiredValue = parseFloat(volumeRequired.textContent); // Parse volumeRequired.textContent
 
-            if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue)) { // Check if all values are valid
-                const waterToAdd = waterGoal - ((volumeRequiredValue * waterContentPer100) / 100);
-                updateOutput(waterToAddElement, waterToAdd);
-            } else {
-                 // Ensure waterToAdd is not negative
-                if (waterToAdd < 0) {
-                    waterToAdd = 0;
-                }
-                    // else{updateOutput(waterToAddElement, NaN); // Or display an error message
-                    //     }
+        //     if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue)) { // Check if all values are valid
+        //         const waterToAdd = waterGoal - ((volumeRequiredValue * waterContentPer100) / 100);
+        //         updateOutput(waterToAddElement, waterToAdd);
+        //     } else {
+        //          // Ensure waterToAdd is not negative
+        //         if (waterToAdd < 0) {
+        //             waterToAdd = 0;
+        //         }
+        //             else{updateOutput(waterToAddElement, NaN); // Or display an error message
+        //                  }
                 
-            }
-        });
+        //     }
+        // });
 
     </script>
 </body>
