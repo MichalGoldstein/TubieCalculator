@@ -14,7 +14,7 @@
             font-family: 'Open Sans', sans-serif;
             margin: 20px;
             line-height: 1.6;
-            background-color: #EFFAFD;
+            background-color: #8a1445;
             color: #37474f;
             display: flex;
             flex-direction: column;
@@ -392,53 +392,58 @@
         });
 
         document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
-        const waterGoal = parseFloat(document.getElementById('waterGoal').value);
-        const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
-        const volumeRequiredValue = parseFloat(volumeRequired.textContent);
+            const waterGoal = parseFloat(document.getElementById('waterGoal').value);
+            const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
+            const volumeRequiredValue = parseFloat(document.getElementById('volumeRequired').textContent);
+            const infusionHours = parseFloat(document.getElementById('infusionHours').value);
 
-        if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue)) {
-            // Calculate water to add, ensuring it's non-negative
-            const waterToAdd = Math.max(0, waterGoal - ((volumeRequiredValue * waterContentPer100) / 100));
 
-            // Update "Water to Add" with the non-negative value
-            updateOutput(waterToAddElement, waterToAdd);
+            if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue) && !isNaN(infusionHours)) {
+                let waterToAdd = Math.max(0, waterGoal - ((volumeRequiredValue * waterContentPer100) / 100));
 
-            // Update "Updated Rate" with the original volume (no water added)
-            updateOutput(updatedRateElement, volumeRequiredValue / parseFloat(document.getElementById('infusionHours').value));
-        } else {
-            updateOutput(waterToAddElement, NaN); // Or display an error message
-        }
+                updateOutput(waterToAddElement, waterToAdd);
+
+                // Correctly calculate updated rate.
+                let updatedRate = volumeRequiredValue / infusionHours;
+                if(waterToAdd > 0){
+                    updatedRate = (volumeRequiredValue + waterToAdd) / infusionHours;
+                }
+                updateOutput(updatedRateElement, updatedRate);
+            } else {
+                updateOutput(waterToAddElement, NaN);
+                updateOutput(updatedRateElement, NaN);
+            }
         });
 
         function updateOutput(element, value) {
             element.textContent = value ? value.toFixed(2) : "N/A";
         }
 
-        document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
-            const goal = parseFloat(document.getElementById('calorieGoal').value);
-            const calPerMl = parseFloat(formulaSelect.value);
-            const volume = goal / calPerMl;
-            updateOutput(volumeRequired, volume);
-            const waterPer100 = parseFloat(waterContent100Element.textContent);
-            updateOutput(waterContentCalculatedElement, (volume / 100) * waterPer100);
-        });
+        // document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
+        //     const goal = parseFloat(document.getElementById('calorieGoal').value);
+        //     const calPerMl = parseFloat(formulaSelect.value);
+        //     const volume = goal / calPerMl;
+        //     updateOutput(volumeRequired, volume);
+        //     const waterPer100 = parseFloat(waterContent100Element.textContent);
+        //     updateOutput(waterContentCalculatedElement, (volume / 100) * waterPer100);
+        // });
 
-        document.getElementById('calculateRateBtn').addEventListener('click', () => {
-            const hours = parseFloat(document.getElementById('infusionHours').value);
-            const goal = parseFloat(document.getElementById('calorieGoal').value);
-            const calPerMl = parseFloat(formulaSelect.value);
-            const volume = goal / calPerMl;
-            updateOutput(rateRequired, volume / hours);
+        // document.getElementById('calculateRateBtn').addEventListener('click', () => {
+        //     const hours = parseFloat(document.getElementById('infusionHours').value);
+        //     const goal = parseFloat(document.getElementById('calorieGoal').value);
+        //     const calPerMl = parseFloat(formulaSelect.value);
+        //     const volume = goal / calPerMl;
+        //     updateOutput(rateRequired, volume / hours);
 
-            const waterToAdd = parseFloat(waterToAddElement.textContent);
-            if (!isNaN(waterToAdd) && !isNaN(volume) && !isNaN(hours)) {
-                const totalVolume = volume + waterToAdd;
-                updateOutput(waterContentCalculatedElement, (totalVolume/100)*parseFloat(waterContent100Element.textContent));
-                updateOutput(updatedRateElement, totalVolume / hours);
-            } else {
-                updateOutput(updatedRateElement, NaN);
-            }
-        });
+        //     const waterToAdd = parseFloat(waterToAddElement.textContent);
+        //     if (!isNaN(waterToAdd) && !isNaN(volume) && !isNaN(hours)) {
+        //         const totalVolume = volume + waterToAdd;
+        //         updateOutput(waterContentCalculatedElement, (totalVolume/100)*parseFloat(waterContent100Element.textContent));
+        //         updateOutput(updatedRateElement, totalVolume / hours);
+        //     } else {
+        //         updateOutput(updatedRateElement, NaN);
+        //     }
+        // });
 
     </script>
 </body>
