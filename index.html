@@ -14,7 +14,7 @@
             font-family: 'Open Sans', sans-serif;
             margin: 20px;
             line-height: 1.6;
-            background-color: #EFFAFD;
+            background-color: #fdeffa;
             color: #37474f;
             display: flex;
             flex-direction: column;
@@ -433,25 +433,6 @@
                 updateOutput(updatedRateElement, NaN);
             }
         });
-
-        // document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
-        //     const waterGoal = parseFloat(document.getElementById('waterGoal').value);
-        //     const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
-        //     const volumeRequiredValue = parseFloat(volumeRequired.textContent); // Parse volumeRequired.textContent
-
-        //     if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue)) { // Check if all values are valid
-        //         const waterToAdd = waterGoal - ((volumeRequiredValue * waterContentPer100) / 100);
-        //         updateOutput(waterToAddElement, waterToAdd);
-        //     } else {
-        //          // Ensure waterToAdd is not negative
-        //         if (waterToAdd < 0) {
-        //             waterToAdd = 0;
-        //         }
-        //             else{updateOutput(waterToAddElement, NaN); // Or display an error message
-        //                  }
-                
-        //     }
-        // });
 
     </script>
 </body>
