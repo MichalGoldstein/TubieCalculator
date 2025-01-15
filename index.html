@@ -441,7 +441,13 @@
                 const waterToAdd = waterGoal - ((volumeRequiredValue * waterContentPer100) / 100);
                 updateOutput(waterToAddElement, waterToAdd);
             } else {
-                updateOutput(waterToAddElement, NaN); // Or display an error message
+                 // Ensure waterToAdd is not negative
+                if (waterToAdd < 0) {
+                    waterToAdd = 0;
+                }
+                    else{updateOutput(waterToAddElement, NaN); // Or display an error message
+                        }
+                
             }
         });
 
