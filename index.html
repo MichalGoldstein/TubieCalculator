@@ -14,7 +14,7 @@
             font-family: 'Open Sans', sans-serif;
             margin: 20px;
             line-height: 1.6;
-            background-color: #fdeffa;
+            background-color: #EFFAFD;
             color: #37474f;
             display: flex;
             flex-direction: column;
@@ -392,16 +392,22 @@
         });
 
         document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
-            const waterGoal = parseFloat(document.getElementById('waterGoal').value);
-            const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
-            const volumeRequiredValue = parseFloat(volumeRequired.textContent); // Parse volumeRequired.textContent
+        const waterGoal = parseFloat(document.getElementById('waterGoal').value);
+        const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
+        const volumeRequiredValue = parseFloat(volumeRequired.textContent);
 
-            if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue)) { // Check if all values are valid
-                const waterToAdd = Math.max(0, waterGoal - ((volumeRequiredValue * waterContentPer100) / 100));
-                updateOutput(waterToAddElement, waterToAdd);
-            } else {
-                updateOutput(waterToAddElement, NaN); // Or display an error message
-            }
+        if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue)) {
+            // Calculate water to add, ensuring it's non-negative
+            const waterToAdd = Math.max(0, waterGoal - ((volumeRequiredValue * waterContentPer100) / 100));
+
+            // Update "Water to Add" with the non-negative value
+            updateOutput(waterToAddElement, waterToAdd);
+
+            // Update "Updated Rate" with the original volume (no water added)
+            updateOutput(updatedRateElement, volumeRequiredValue / parseFloat(document.getElementById('infusionHours').value));
+        } else {
+            updateOutput(waterToAddElement, NaN); // Or display an error message
+        }
         });
 
         function updateOutput(element, value) {
