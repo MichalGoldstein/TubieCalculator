@@ -192,6 +192,35 @@
         text-decoration: underline;
         }
 
+        .cookie-banner {
+        background-color: #ffffff;
+        color: #333333;
+        border-top: 1px solid #ddd;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
+        }
+
+         .cookie-banner p {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        .accept-cookies {
+        background-color: #4A8BDF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        margin-left: 10px;
+        }
+
+        .accept-cookies:hover {
+        background-color: #3f74b1;
+        }
+
     </style>
 </head>
 <body>
@@ -284,6 +313,13 @@
               </div>
             </div>
           </footer>
+          <div id="cookie-banner" aria-label="Cookie Consent Banner">
+            <p>
+                This website uses cookies to improve your experience. By continuing to use this site, you accept our use of cookies.
+                <a href="privacy.html">Learn More</a>.
+                <button id="accept-cookies" aria-label="Accept Cookies">Accept</button>
+            </p>
+        </div>
     </div>
     </main>
 
@@ -421,6 +457,22 @@
         function updateOutput(element, value) {
             element.textContent = value ? value.toFixed(2) : 0;
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptCookiesButton = document.getElementById('accept-cookies');
+
+            // Show banner if consent is not saved
+            if (!localStorage.getItem('cookieConsent')) {
+                cookieBanner.style.display = 'block';
+            }
+
+            // Save consent and hide banner
+            acceptCookiesButton.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'true');
+                cookieBanner.style.display = 'none';
+            });
+        });
 
     </script>
 </body>
