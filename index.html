@@ -21,7 +21,7 @@
             font-family: 'Open Sans', sans-serif;
             margin: 20px;
             line-height: 1.6;
-            background-color: #faeffd;
+            background-color: #EFFAFD;
             color: #37474f;
             display: flex;
             flex-direction: column;
@@ -348,14 +348,13 @@
 
         formulaSelect.addEventListener('change', () => {
             const selectedBrand = brandSelect.value;
-            // Get the selected formula using formulaSelect.value (this is KEY)
             const selectedFormula = formulaSelect.value;
 
-            // Get the calorie and water content using the correct selectedFormula
             const calorieContentValue = data[selectedBrand][selectedFormula];
             let waterContentValue = waterData[selectedBrand][selectedFormula];
 
             updateOutput(calorieContent, calorieContentValue);
+            updateOutput(waterContent100Element, waterContentValue); // Update water content output here
 
             const waterContent100Container = waterContent100Element.parentNode;
             let notAvailableMessage = waterContent100Container.querySelector('.not-available');
@@ -369,15 +368,13 @@
                     waterContent100Container.appendChild(notAvailableMessage);
                 }
                 notAvailableMessage.textContent = 'Water content not available for this formula.';
-                waterContentValue = 0; // Important for calculations when water content is N/A
+                waterContentValue = 0;
             } else {
-                updateOutput(waterContent100Element, waterContentValue);
                 if (notAvailableMessage && notAvailableMessage.textContent === 'Water content not available for this formula.') {
                     waterContent100Container.removeChild(notAvailableMessage);
                 }
             }
         });
-
 
         document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
              const goal = parseFloat(document.getElementById('calorieGoal').value);
