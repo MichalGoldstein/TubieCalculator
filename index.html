@@ -21,7 +21,7 @@
             font-family: 'Open Sans', sans-serif;
             margin: 20px;
             line-height: 1.6;
-            background-color: #8b2985;
+            background-color: #EFFAFD;
             color: #37474f;
             display: flex;
             flex-direction: column;
@@ -296,7 +296,7 @@
     <script>
         let data = {};
         let waterData = {};
-
+    
         fetch('data.json')
             .then(response => response.json())
             .then(json => {
@@ -310,7 +310,7 @@
                     .catch(err => console.error('Error loading water.json:', err));
             })
             .catch(err => console.error('Error loading data.json:', err));
-
+    
         const brandSelect = document.getElementById('brandSelect');
         const formulaSelect = document.getElementById('formulaSelect');
         const calorieContent = document.getElementById('calorieContent');
@@ -322,7 +322,7 @@
         const updatedRateElement = document.getElementById('updatedRate');
         const outputBoxes = [calorieContent, volumeRequired, rateRequired, waterContent100Element, waterContentCalculatedElement, waterToAddElement, updatedRateElement];
         outputBoxes.forEach(box => box.textContent = "");
-
+    
         function populateBrands() {
             Object.keys(data).forEach(brand => {
                 const option = document.createElement('option');
@@ -331,40 +331,36 @@
                 brandSelect.appendChild(option);
             });
         }
-
+    
         brandSelect.addEventListener('change', () => {
             formulaSelect.innerHTML = '<option value="" selected disabled>Select a formula</option>';
             formulaSelect.disabled = false;
-
+    
             const selectedBrand = brandSelect.value;
             const formulas = data[selectedBrand];
-
             Object.keys(formulas).sort().forEach(formula => {
                 const option = document.createElement('option');
-                // The problem was here: you were setting the value to the calorie content
-                // It should be the formula Name itself
-                option.value = formula; // Correct: set value to the formula name (key)
-                option.textContent = formula; // Text content should also be the formula name
+                option.value = formula; // Correct: set value to the formula name
+                option.textContent = formula; // Consistent: text content is also formula name
                 formulaSelect.appendChild(option);
             });
         });
-
+    
         formulaSelect.addEventListener('change', () => {
             const selectedBrand = brandSelect.value;
             const selectedFormula = formulaSelect.value;
-
+    
             const calorieContentValue = data[selectedBrand][selectedFormula];
             let waterContentValue = waterData[selectedBrand][selectedFormula];
-
+    
             updateOutput(calorieContent, calorieContentValue);
-            updateOutput(waterContent100Element, waterContentValue); // Update water content output here
-
+            updateOutput(waterContent100Element, waterContentValue);
+    
             const waterContent100Container = waterContent100Element.parentNode;
             let notAvailableMessage = waterContent100Container.querySelector('.not-available');
-
+    
             if (waterContentValue === "N/A") {
                 updateOutput(waterContent100Element, "");
-
                 if (!notAvailableMessage) {
                     notAvailableMessage = document.createElement('div');
                     notAvailableMessage.className = 'not-available';
@@ -372,51 +368,64 @@
                 }
                 notAvailableMessage.textContent = 'Water content not available for this formula.';
                 waterContentValue = 0;
-            } else {
-                if (notAvailableMessage && notAvailableMessage.textContent === 'Water content not available for this formula.') {
-                    waterContent100Container.removeChild(notAvailableMessage);
-                }
+            } else if (notAvailableMessage) { // Simplified condition
+                waterContent100Container.removeChild(notAvailableMessage);
             }
         });
-
+    
         document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
-             const goal = parseFloat(document.getElementById('calorieGoal').value);
-            const calPerMl = parseFloat(formulaSelect.value);
-            const volume = goal / calPerMl;
-            updateOutput(volumeRequired, volume);
-            const waterPer100 = parseFloat(waterContent100Element.textContent) || 0;
-            updateOutput(waterContentCalculatedElement, (volume / 100) * waterPer100);
-        });
-
-        document.getElementById('calculateRateBtn').addEventListener('click', () => {
-           const hours = parseFloat(document.getElementById('infusionHours').value);
             const goal = parseFloat(document.getElementById('calorieGoal').value);
-            const calPerMl = parseFloat(formulaSelect.value);
-            const volume = goal / calPerMl;
-            updateOutput(rateRequired, volume / hours);
-
-            const waterToAdd = parseFloat(waterToAddElement.textContent) || 0;
-            const totalVolume = volume + waterToAdd;
-            const waterPer100 = parseFloat(waterContent100Element.textContent) || 0;
-            updateOutput(waterContentCalculatedElement, (totalVolume/100)* waterPer100);
-            updateOutput(updatedRateElement, totalVolume / hours);
+            const selectedBrand = brandSelect.value;
+            const selectedFormula = formulaSelect.value;
+            const calPerMl = data[selectedBrand][selectedFormula];
+    
+            if (!isNaN(goal) && calPerMl) {
+                const volume = goal / calPerMl;
+                updateOutput(volumeRequired, volume);
+                const waterPer100 = parseFloat(waterContent100Element.textContent) || 0;
+                updateOutput(waterContentCalculatedElement, (volume / 100) * waterPer100);
+            } else {
+                updateOutput(volumeRequired, NaN);
+                updateOutput(waterContentCalculatedElement, NaN);
+            }
         });
-
+    
+        document.getElementById('calculateRateBtn').addEventListener('click', () => {
+            const hours = parseFloat(document.getElementById('infusionHours').value);
+            const goal = parseFloat(document.getElementById('calorieGoal').value);
+            const selectedBrand = brandSelect.value;
+            const selectedFormula = formulaSelect.value;
+            const calPerMl = data[selectedBrand][selectedFormula];
+    
+            if (!isNaN(hours) && !isNaN(goal) && calPerMl) {
+                const volume = goal / calPerMl;
+                updateOutput(rateRequired, volume / hours);
+    
+                const waterToAdd = parseFloat(waterToAddElement.textContent) || 0;
+                const totalVolume = volume + waterToAdd;
+                const waterPer100 = parseFloat(waterContent100Element.textContent) || 0;
+                updateOutput(waterContentCalculatedElement, (totalVolume / 100) * waterPer100);
+                updateOutput(updatedRateElement, totalVolume / hours);
+            } else {
+                updateOutput(rateRequired, NaN);
+                updateOutput(updatedRateElement, NaN);
+                updateOutput(waterContentCalculatedElement, NaN);
+            }
+        });
+    
         document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
             const waterGoal = parseFloat(document.getElementById('waterGoal').value);
             const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
             const volumeRequiredValue = parseFloat(document.getElementById('volumeRequired').textContent);
             const infusionHours = parseFloat(document.getElementById('infusionHours').value);
-
-
+    
             if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue) && !isNaN(infusionHours)) {
                 let waterToAdd = Math.max(0, waterGoal - ((volumeRequiredValue * waterContentPer100) / 100));
-
+    
                 updateOutput(waterToAddElement, waterToAdd);
-
-                // Correctly calculate updated rate.
+    
                 let updatedRate = volumeRequiredValue / infusionHours;
-                if(waterToAdd > 0){
+                if (waterToAdd > 0) {
                     updatedRate = (volumeRequiredValue + waterToAdd) / infusionHours;
                 }
                 updateOutput(updatedRateElement, updatedRate);
@@ -425,11 +434,10 @@
                 updateOutput(updatedRateElement, NaN);
             }
         });
-
+    
         function updateOutput(element, value) {
             element.textContent = value ? value.toFixed(2) : 0;
         }
-
     </script>
 </body>
 </html>
