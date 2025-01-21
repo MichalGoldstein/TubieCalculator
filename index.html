@@ -338,10 +338,13 @@
 
             const selectedBrand = brandSelect.value;
             const formulas = data[selectedBrand];
+
             Object.keys(formulas).sort().forEach(formula => {
                 const option = document.createElement('option');
-                option.value = formulas[formula];
-                option.textContent = formula;
+                // The problem was here: you were setting the value to the calorie content
+                // It should be the formula Name itself
+                option.value = formula; // Correct: set value to the formula name (key)
+                option.textContent = formula; // Text content should also be the formula name
                 formulaSelect.appendChild(option);
             });
         });
