@@ -370,7 +370,7 @@
                 option.textContent = formula;
                 formulaSelect.appendChild(option);
             });
-            resetOutputs(); // Reset ALL outputs when brand changes
+            resetOutputs();
         });
     
         formulaSelect.addEventListener('change', () => {
@@ -381,7 +381,6 @@
             let waterContentValue = waterData[selectedBrand][selectedFormula];
     
             updateOutput(calorieContent, calorieContentValue);
-            updateOutput(waterContent100Element, waterContentValue);
     
             const waterContent100Container = waterContent100Element.parentNode;
             let notAvailableMessage = waterContent100Container.querySelector('.not-available');
@@ -394,12 +393,15 @@
                     waterContent100Container.appendChild(notAvailableMessage);
                 }
                 notAvailableMessage.textContent = 'Water content not available for this formula.';
-                waterContentValue = 0;
-            } else if (notAvailableMessage) {
-                waterContent100Container.removeChild(notAvailableMessage);
+                waterContentValue = 0; // Important: Set to 0 for calculations
+            } else {
+                updateOutput(waterContent100Element, waterContentValue);
+                if (notAvailableMessage) {
+                    waterContent100Container.removeChild(notAvailableMessage);
+                }
             }
     
-            resetCalculatedOutputs(); // Reset CALCULATED outputs when formula changes
+            resetCalculatedOutputs();
         });
     
         document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
@@ -464,7 +466,7 @@
         });
     
         function updateOutput(element, value) {
-            element.textContent = value ? value.toFixed(2) : ""; // Display empty string
+            element.textContent = value ? value.toFixed(2) : "";
         }
     
         function resetOutputs() {
