@@ -366,10 +366,11 @@
             const formulas = data[selectedBrand];
             Object.keys(formulas).sort().forEach(formula => {
                 const option = document.createElement('option');
-                option.value = formula; // Correct: set value to the formula name
+                option.value = formula;
                 option.textContent = formula;
                 formulaSelect.appendChild(option);
             });
+            resetOutputs(); // Reset ALL outputs when brand changes
         });
     
         formulaSelect.addEventListener('change', () => {
@@ -393,10 +394,12 @@
                     waterContent100Container.appendChild(notAvailableMessage);
                 }
                 notAvailableMessage.textContent = 'Water content not available for this formula.';
-                waterContentValue = 0; // Important: set to 0 to prevent NaN in calculations
+                waterContentValue = 0;
             } else if (notAvailableMessage) {
                 waterContent100Container.removeChild(notAvailableMessage);
             }
+    
+            resetCalculatedOutputs(); // Reset CALCULATED outputs when formula changes
         });
     
         document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
@@ -461,7 +464,16 @@
         });
     
         function updateOutput(element, value) {
-            element.textContent = value ? value.toFixed(2) : 0;
+            element.textContent = value ? value.toFixed(2) : ""; // Display empty string
+        }
+    
+        function resetOutputs() {
+            outputBoxes.forEach(box => box.textContent = "");
+        }
+    
+        function resetCalculatedOutputs() {
+            const calculatedOutputs = [volumeRequired, rateRequired, waterContentCalculatedElement, waterToAddElement, updatedRateElement];
+            calculatedOutputs.forEach(box => box.textContent = "");
         }
     </script>
 </body>
