@@ -367,7 +367,7 @@
             Object.keys(formulas).sort().forEach(formula => {
                 const option = document.createElement('option');
                 option.value = formula; // Correct: set value to the formula name
-                option.textContent = formula; // Consistent: text content is also formula name
+                option.textContent = formula;
                 formulaSelect.appendChild(option);
             });
         });
@@ -393,8 +393,8 @@
                     waterContent100Container.appendChild(notAvailableMessage);
                 }
                 notAvailableMessage.textContent = 'Water content not available for this formula.';
-                waterContentValue = 0;
-            } else if (notAvailableMessage) { // Simplified condition
+                waterContentValue = 0; // Important: set to 0 to prevent NaN in calculations
+            } else if (notAvailableMessage) {
                 waterContent100Container.removeChild(notAvailableMessage);
             }
         });
@@ -447,7 +447,6 @@
     
             if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue) && !isNaN(infusionHours)) {
                 let waterToAdd = Math.max(0, waterGoal - ((volumeRequiredValue * waterContentPer100) / 100));
-    
                 updateOutput(waterToAddElement, waterToAdd);
     
                 let updatedRate = volumeRequiredValue / infusionHours;
