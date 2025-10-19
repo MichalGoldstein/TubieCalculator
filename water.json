@@ -1,9 +1,17 @@
 {
     "Nestle": {
         "COMPLEAT Original 1.5": 76,
+        "COMPLEAT Pediatric Original 1.5": 76,
+        "COMPLEAT Pediatric Original 1.0": 83.6,
         "COMPLEAT Peptide 1.0": 83.6,
+        "COMPLEAT Pediatric Peptide 1.0": 83.6,
+        "Compleat Pediatric Peptide 1.5": 76.8,
+        "COMPLEAT Pediatric Standard 1.0": 84,
+        "COMPLEAT Pediatric Standard 1.4": 78.8,
         "COMPLEAT Organic Blends": 81,
-        "Nutren 1.0 Fiber": 83.6,
+        "COMPLEAT Pediatric Organic Blends": 98.4,
+        "COMPLEAT Pediatric Original Reduced Calorie 0.6": 89.6,
+        "Nutren Junior Fiber": 84.8,
         "COMPLEAT Original 1.0": 82.8,
         "Nutren 2.0": 69.2,
         "Isosource 1.5": 76.4,
@@ -19,7 +27,7 @@
         "Peptamen with PREBIO": 84.4,
         "Peptamen 1.5 with PREBIO": 77.2,
         "Peptamen AF": 81.2,
-        "PEPTAMEN 1.5": 76.8,
+        "Peptamen 1.5": 76.8,
         "Tolerex": 85
     },
     
@@ -29,7 +37,9 @@
         "Peptide 1.5": 70.15,
         "Peptide 1.0": 79.08,
         "Glucose Support 1.2": 76,
-        "Renal Support 1.8": 66
+        "Renal Support 1.8": 66,
+        "Pediatric Peptide 1.0 Plain": 70,
+        "Pediatric Standard 1.2 Vanilla": 75
     },
 
     "Functional Formularies": {
@@ -40,7 +50,7 @@
         "Nourish": 68.3,
         "Nourish Peptide": 70.5,
         "Nourish Peptide Berry Medley": 68.3,
-        "Keto": 55.3
+        "Keto Peptide": 55.3
     },
 
     "Real Food Blends": {
@@ -59,9 +69,10 @@
         "Jevity 1 Cal": 83.5,
         "Jevity 1.2 Cal": 80.7,
         "Jevity 1.5 Cal": 76.1,
-        "LiquiProtein": 81.0,
+        "Liquid Protein": 81.0,
         "Nepro": 72.7,
         "Osmolite 1.2 Cal": 82.4,
+        "Osmolite 1.5 Cal": 76.2,
         "Promote": 83.7,
         "Suplena": 73.8,
         "TwoCal HN": 70.2,
