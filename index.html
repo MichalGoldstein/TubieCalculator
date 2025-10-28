@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
-</head>
+
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
@@ -43,7 +43,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             padding: 30px;
             background-color: white;
             border-radius: 15px;
@@ -53,15 +53,15 @@
         .logo {
             display: inline-block;
             vertical-align: middle;
-            width: 100px; /* Adjust logo size */
+            width: 100px;
             height: auto;
-            margin-right: 150px; /* Space between logo and title */
+            margin-right: 150px;
             margin-bottom: 50px;
         }
 
         h1, h2 {
             font-family: 'Nunito', sans-serif;
-            color: #4A8BDF; /* Royal blue headings */
+            color: #4A8BDF;
             text-align: center;
         }
 
@@ -73,7 +73,7 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: #333; /* Dark gray labels */
+            color: #333;
         }
 
         .title {
@@ -93,13 +93,11 @@
         }
 
         button {
-            background-color: #A0006D; /* Eggplant buttons */
+            background-color: #A0006D;
             border: none;
             color: white;
             padding: 12px 20px;
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
@@ -107,7 +105,7 @@
         }
 
         button:hover {
-            background-color: #88005b; /* Darker eggplant on hover */
+            background-color: #88005b;
         }
 
         .output-box {
@@ -123,7 +121,7 @@
 
         .columns {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
             margin-top: 20px;
         }
@@ -132,7 +130,7 @@
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 10px;
-            background-color: white; /* White column backgrounds */
+            background-color: white;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
@@ -153,10 +151,10 @@
             color: #d9534f;
         }
 
-        .not-available { /* Style for "N/A" messages */
+        .not-available {
             font-style: italic;
             color: gray;
-            margin-top: 5px; /* Add some spacing */
+            margin-top: 5px;
             text-align: center;
         }
 
@@ -180,47 +178,48 @@
         nav a:hover {
             background-color: #3f74b1;
         }
-        
+
         footer {
-        background-color: #f0f0f0; /* Match your site's lighter beige background */
-        padding: 20px;
-        text-align: center;
-        font-size: 0.9em;
-        border-top: 1px solid #ddd;
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid #ddd;
         }
 
         .footer-content {
-        max-width: 800px;
-        margin: 0 auto;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .footer-links a {
-        color: #333; /* Adjust for good contrast */
-        text-decoration: none;
-        margin: 0 5px;
+            color: #333;
+            text-decoration: none;
+            margin: 0 5px;
         }
 
         .footer-links a:hover {
-        text-decoration: underline;
+            text-decoration: underline;
         }
-
     </style>
 </head>
 <body>
     <div id="1786508876"></div>
-        <script>
+    <script>
         window.msAdsQueue.push(function(){
             window.mmnow.render({
-            adUnitId: 1786508876,
-            elementId: 1786508876
+                adUnitId: 1786508876,
+                elementId: 1786508876
             });
         });
-        </script>
+    </script>
+
     <nav>
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact Us</a>
     </nav>
+
     <main>
     <div class="container">
         <img src="favicon_enhanced.png" alt="Logo" class="logo">
@@ -232,13 +231,13 @@
                 <option value="" selected disabled>Select a brand</option>
             </select>
         </div>
+
         <div class="input-group">
             <label for="formulaSelect">Choose a formula:</label>
             <select id="formulaSelect" disabled>
                 <option value="" selected disabled>Select a formula</option>
             </select>
         </div>
-
 
         <div class="columns">
             <div class="column">
@@ -291,53 +290,67 @@
                     <span id="updatedRate" class="output-box"></span> ml/hr
                 </div>
             </div>
-        </div>
 
-        <div id="1786508876"></div>
-            <script>
-            window.msAdsQueue.push(function(){
-                window.mmnow.render({
-                adUnitId: 1786508876,
-                elementId: 1786508876
-                });
-            });
-            </script>
+            <div class="column">
+                <h2>Protein Calculations</h2>
+                <div class="input-group">
+                    <label for="proteinContent100">Protein Content (per 100ml):</label>
+                    <span id="proteinContent100" class="output-box"></span> g
+                </div>
+                <div class="input-group">
+                    <label for="proteinContentCalculated">Protein Content (in calculated volume):</label>
+                    <span id="proteinContentCalculated" class="output-box"></span> g
+                </div>
+                <div class="input-group">
+                    <label for="proteinGoal">Enter your protein goal:</label>
+                    <input type="number" id="proteinGoal" placeholder="Protein goal in g">
+                </div>
+                <button id="calculateProteinToAddBtn">Calculate Difference</button>
+                <div class="input-group">
+                    <label for="proteinToAdd">Protein to Add:</label>
+                    <span id="proteinToAdd" class="output-box"></span> g
+                </div>
+            </div>
+        </div>
 
         <div class="disclaimer">
             <p><strong>Disclaimer:</strong> The information provided on this website is for general informational purposes only. It is not intended as medical advice or to replace consultation with your healthcare provider. Always consult with your medical team before making any decisions regarding your healthcare or nutrition needs.</p>
         </div>
+
         <footer>
             <div class="footer-content">
-              <p>&copy; 2025 Tubie Calculator. All rights reserved.</p>
-              <div class="footer-links">
-                <a href="privacy.html">Privacy Policy</a> | 
-                <a href="terms.html">Terms of Service</a> | 
-                <a href="#" class="termly-display-preferences">Consent Preferences</a>
-              </div>
+                <p>&copy; 2025 Tubie Calculator. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="privacy.html">Privacy Policy</a> | 
+                    <a href="terms.html">Terms of Service</a> | 
+                    <a href="#" class="termly-display-preferences">Consent Preferences</a>
+                </div>
             </div>
-          </footer>
-
+        </footer>
     </div>
     </main>
 
     <script>
         let data = {};
         let waterData = {};
-    
+        let proteinData = {};
+
         fetch('data.json')
             .then(response => response.json())
             .then(json => {
                 data = json;
                 populateBrands();
-                fetch('water.json')
-                    .then(response => response.json())
-                    .then(json => {
-                        waterData = json;
-                    })
-                    .catch(err => console.error('Error loading water.json:', err));
+                return Promise.all([
+                    fetch('water.json').then(r => r.json()),
+                    fetch('protein.json').then(r => r.json())
+                ]);
             })
-            .catch(err => console.error('Error loading data.json:', err));
-    
+            .then(([waterJson, proteinJson]) => {
+                waterData = waterJson;
+                proteinData = proteinJson;
+            })
+            .catch(err => console.error('Error loading JSON files:', err));
+
         const brandSelect = document.getElementById('brandSelect');
         const formulaSelect = document.getElementById('formulaSelect');
         const calorieContent = document.getElementById('calorieContent');
@@ -347,9 +360,17 @@
         const waterContentCalculatedElement = document.getElementById('waterContentCalculated');
         const waterToAddElement = document.getElementById('waterToAdd');
         const updatedRateElement = document.getElementById('updatedRate');
-        const outputBoxes = [calorieContent, volumeRequired, rateRequired, waterContent100Element, waterContentCalculatedElement, waterToAddElement, updatedRateElement];
+        const proteinContent100Element = document.getElementById('proteinContent100');
+        const proteinContentCalculatedElement = document.getElementById('proteinContentCalculated');
+        const proteinToAddElement = document.getElementById('proteinToAdd');
+
+        const outputBoxes = [
+            calorieContent, volumeRequired, rateRequired,
+            waterContent100Element, waterContentCalculatedElement, waterToAddElement, updatedRateElement,
+            proteinContent100Element, proteinContentCalculatedElement, proteinToAddElement
+        ];
         outputBoxes.forEach(box => box.textContent = "");
-    
+
         function populateBrands() {
             Object.keys(data).forEach(brand => {
                 const option = document.createElement('option');
@@ -358,11 +379,11 @@
                 brandSelect.appendChild(option);
             });
         }
-    
+
         brandSelect.addEventListener('change', () => {
             formulaSelect.innerHTML = '<option value="" selected disabled>Select a formula</option>';
             formulaSelect.disabled = false;
-    
+
             const selectedBrand = brandSelect.value;
             const formulas = data[selectedBrand];
             Object.keys(formulas).sort().forEach(formula => {
@@ -373,19 +394,20 @@
             });
             resetOutputs();
         });
-    
+
         formulaSelect.addEventListener('change', () => {
             const selectedBrand = brandSelect.value;
             const selectedFormula = formulaSelect.value;
-    
+
             const calorieContentValue = data[selectedBrand][selectedFormula];
             let waterContentValue = waterData[selectedBrand][selectedFormula];
-    
+            let proteinContentValue = proteinData[selectedBrand][selectedFormula];
+
             updateOutput(calorieContent, calorieContentValue);
-    
+
+            // Handle water
             const waterContent100Container = waterContent100Element.parentNode;
             let notAvailableMessage = waterContent100Container.querySelector('.not-available');
-    
             if (waterContentValue === "N/A") {
                 updateOutput(waterContent100Element, "");
                 if (!notAvailableMessage) {
@@ -394,45 +416,52 @@
                     waterContent100Container.appendChild(notAvailableMessage);
                 }
                 notAvailableMessage.textContent = 'Water content not available for this formula.';
-                waterContentValue = 0; // Important: Set to 0 for calculations
+                waterContentValue = 0;
             } else {
                 updateOutput(waterContent100Element, waterContentValue);
                 if (notAvailableMessage) {
                     waterContent100Container.removeChild(notAvailableMessage);
                 }
             }
-    
+
+            // Handle protein
+            updateOutput(proteinContent100Element, proteinContentValue === "N/A" ? "" : proteinContentValue);
+
             resetCalculatedOutputs();
         });
-    
+
         document.getElementById('calculateVolumeBtn').addEventListener('click', () => {
             const goal = parseFloat(document.getElementById('calorieGoal').value);
             const selectedBrand = brandSelect.value;
             const selectedFormula = formulaSelect.value;
             const calPerMl = data[selectedBrand][selectedFormula];
-    
+
             if (!isNaN(goal) && calPerMl) {
                 const volume = goal / calPerMl;
                 updateOutput(volumeRequired, volume);
                 const waterPer100 = parseFloat(waterContent100Element.textContent) || 0;
                 updateOutput(waterContentCalculatedElement, (volume / 100) * waterPer100);
+
+                const proteinPer100 = parseFloat(proteinContent100Element.textContent) || 0;
+                updateOutput(proteinContentCalculatedElement, (volume / 100) * proteinPer100);
             } else {
                 updateOutput(volumeRequired, NaN);
                 updateOutput(waterContentCalculatedElement, NaN);
+                updateOutput(proteinContentCalculatedElement, NaN);
             }
         });
-    
+
         document.getElementById('calculateRateBtn').addEventListener('click', () => {
             const hours = parseFloat(document.getElementById('infusionHours').value);
             const goal = parseFloat(document.getElementById('calorieGoal').value);
             const selectedBrand = brandSelect.value;
             const selectedFormula = formulaSelect.value;
             const calPerMl = data[selectedBrand][selectedFormula];
-    
+
             if (!isNaN(hours) && !isNaN(goal) && calPerMl) {
                 const volume = goal / calPerMl;
                 updateOutput(rateRequired, volume / hours);
-    
+
                 const waterToAdd = parseFloat(waterToAddElement.textContent) || 0;
                 const totalVolume = volume + waterToAdd;
                 const waterPer100 = parseFloat(waterContent100Element.textContent) || 0;
@@ -444,39 +473,47 @@
                 updateOutput(waterContentCalculatedElement, NaN);
             }
         });
-    
+
         document.getElementById('calculateWaterToAddBtn').addEventListener('click', () => {
             const waterGoal = parseFloat(document.getElementById('waterGoal').value);
             const waterContentPer100 = parseFloat(document.getElementById('waterContent100').textContent);
-            const volumeRequiredValue = parseFloat(document.getElementById('volumeRequired').textContent);
-            const infusionHours = parseFloat(document.getElementById('infusionHours').value);
-    
-            if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volumeRequiredValue) && !isNaN(infusionHours)) {
-                let waterToAdd = Math.max(0, waterGoal - ((volumeRequiredValue * waterContentPer100) / 100));
+            const volume = parseFloat(volumeRequired.textContent);
+
+            if (!isNaN(waterGoal) && !isNaN(waterContentPer100) && !isNaN(volume)) {
+                const totalWater = (volume / 100) * waterContentPer100;
+                const waterToAdd = waterGoal - totalWater;
                 updateOutput(waterToAddElement, waterToAdd);
-    
-                let updatedRate = volumeRequiredValue / infusionHours;
-                if (waterToAdd > 0) {
-                    updatedRate = (volumeRequiredValue + waterToAdd) / infusionHours;
-                }
-                updateOutput(updatedRateElement, updatedRate);
             } else {
                 updateOutput(waterToAddElement, NaN);
-                updateOutput(updatedRateElement, NaN);
             }
         });
-    
-        function updateOutput(element, value) {
-            element.textContent = value ? value.toFixed(2) : "";
-        }
-    
+
+        document.getElementById('calculateProteinToAddBtn').addEventListener('click', () => {
+            const proteinGoal = parseFloat(document.getElementById('proteinGoal').value);
+            const proteinContentCalculated = parseFloat(document.getElementById('proteinContentCalculated').textContent);
+
+            if (!isNaN(proteinGoal) && !isNaN(proteinContentCalculated)) {
+                let proteinToAdd = proteinGoal - proteinContentCalculated;
+                if (proteinToAdd < 0) proteinToAdd = 0; // don’t show negative or surplus values
+                updateOutput(proteinToAddElement, proteinToAdd);
+            } else {
+                updateOutput(proteinToAddElement, NaN);
+            }
+        });
+
+
         function resetOutputs() {
             outputBoxes.forEach(box => box.textContent = "");
         }
-    
+
         function resetCalculatedOutputs() {
-            const calculatedOutputs = [volumeRequired, rateRequired, waterContentCalculatedElement, waterToAddElement, updatedRateElement];
-            calculatedOutputs.forEach(box => box.textContent = "");
+            ['volumeRequired', 'rateRequired', 'waterContentCalculated', 'waterToAdd', 'updatedRate', 'proteinContentCalculated', 'proteinToAdd'].forEach(id => {
+                document.getElementById(id).textContent = "";
+            });
+        }
+
+        function updateOutput(element, value) {
+            element.textContent = isNaN(value) || value === undefined ? "" : value.toFixed(2);
         }
     </script>
 </body>
